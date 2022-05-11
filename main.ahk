@@ -1,15 +1,21 @@
 ; Read Me
-	LastUpdate := "2021-05-24"
-	BloonsVersion := "v25.1.3828"
-	
-/* To Do
+	LastUpdate := "2021-06-17"
+	BloonsVersion := "v26.2.4058"
+
+/* Update these variables
+	1) MapListOrdered
+	2) HeroListOrdered
+	3) vMap
+	4) vHero
+	*/
+
+/* To do
 	1) Screen OCR reader for in-game money
 	2) Work dynamically with all screen sizes
 	3) Replace sleep/wait with BlockInput https://www.autohotkey.com/docs/commands/BlockInput.htm
-	4) Arrays for Map selection/pages
-	5) Arrays for Monkey X&Y coordinates, per Map 
+	4) Arrays for Monkey X&Y coordinates, per Map
 	*/
-	
+
 ; Initilization
 	; Initilization- Environment
 		#SingleInstance force 			; https://www.autohotkey.com/docs/commands/_SingleInstance.htm
@@ -18,10 +24,10 @@
 		;SetBatchLines -1 				; https://www.autohotkey.com/docs/commands/SetBatchLines.htm
 		#WinActivateForce 				; https://www.autohotkey.com/docs/commands/_WinActivateForce.htm
 		SetTitleMatchMode, 3 			; https://www.autohotkey.com/docs/commands/SetTitleMatchMode.htm
-		global Map,Difficulty,Hero,AdvancedSettings,StartOnMap,Freeplay,DebugMode,LoopAmount,InputDelay,MapLoadTime,PopUpLoadTime,HeroSelectionXPosition
-		global DartX,DartY,BoomerangX,BoomerangY,BombX,BombY,TackX,TackY,IceX,IceY,GlueX,GlueY,SniperX,SniperY,SubX,SubY,BuccaneerX,BuccaneerY,AceX,AceY,HeliX,HeliY,MotarX,MotarY,WizardX,WizardY,SuperX,SuperY,NinjaX,NinjaY,AlchemistX,AlchemistY,DruidX,DruidY,FarmX,FarmY,EngineerX,EngineerY,SpikeX,SpikeY,VillageX,VillageY,HeroX,HeroY
-		global MapListOrdered := ["Monkey Meadow","Tree Stump","Town Center","Resort","Skates","Lotus Island","Candy Falls","Winter Park","Carved","Park Path","Alpine Run","Frozen Over","In The Loop","Cubism","Four Circles","Hedge","End Of The Road","Logs","Balance","Encrypted","Bazaar","Adora's Temple","Spring Spring","KartsNDarts","Moon Landing","Haunted","Downstream","Firing Range","Cracked","Streambed","Chutes","Rake","Spice Islands","","","","X Factor","Mesa","Geared","Spillway","Cargo","Pat's Pond","Peninsula","High Finance","Another Brick","Off The Coast","Cornfield","Underground","Ravine","Flooded Valley","Infernal","Bloddy Puddles","Workshop","Quad","Dark Castle","Muddy Puddles","#Ouch","","",""]
-		global HeroListOrdered := ["Quincy","Gwendolin","Striker Jones","Obyn Greenfoot","Sauda","Captain Churchhill","Benjamin","Ezili","Pat Fusty","Adora","Admiral Brickell","Etienne"]
+		global Map,Difficulty,Hero,AdvancedSettings,StartOnMap,Freeplay,DebugMode,LoopAmount,HeroSelectionXPosition
+		global DartX,DartY,BoomerangX,BoomerangY,BombX,BombY,TackX,TackY,IceX,IceY,GlueX,GlueY,SniperX,SniperY,SubX,SubY,BuccaneerX,BuccaneerY,AceX,AceY,HeliX,HeliY,MortarX,MortarY,DartlingX,DartlingY,WizardX,WizardY,SuperX,SuperY,NinjaX,NinjaY,AlchemistX,AlchemistY,DruidX,DruidY,FarmX,FarmY,EngineerX,EngineerY,SpikeX,SpikeY,VillageX,VillageY,HeroX,HeroY
+		global MapListOrdered := ["Monkey Meadow","Tree Stump","Town Center","Resort","Skates","Lotus Island","Candy Falls","Winter Park","Carved","Park Path","Alpine Run","Frozen Over","In The Loop","Cubism","Four Circles","Hedge","End Of The Road","Logs","Balance","Encrypted","Bazaar","Adora's Temple","Spring Spring","KartsNDarts","Moon Landing","Haunted","Downstream","Firing Range","Cracked","Streambed","Chutes","Rake","Spice Islands","","","","X Factor","Mesa","Geared","Spillway","Cargo","Pat's Pond","Peninsula","High Finance","Another Brick","Off The Coast","Cornfield","Underground","Sanctuary","Ravine","Flooded Valley","Infernal","Bloddy Puddles","Workshop","Quad","Dark Castle","Muddy Puddles","#Ouch","",""]
+		global HeroListOrdered := ["Quincy","Gwendolin","Striker Jones","Obyn Greenfoot","Psi","Captain Churchhill","Benjamin","Ezili","Pat Fusty","Adora","Admiral Brickell","Etienne","Sauda"]
 
 	; Initilization- Tray
 		If FileExist("C:\Program Files (x86)\Steam\steamapps\common\BloonsTD6\BloonsTD6.exe") {
@@ -58,11 +64,11 @@
 		Gui, Add, GroupBox, x9 y52 w245 h100, Step 1: Create your build:
 		Gui, Font ; reset font to default
 		Gui, Add, Text, x12 y77 w81 h21 +0x200, Map:
-		Gui, Add, DropDownList, x65 y77 w120 +Disabled vMap, Adora's Temple|Alpine Run|Another Brick|Balance|Bazaar|Bloddy Puddles|Candy Falls|Cargo|Carved|Chutes|Cornfield|Cracked|Cubism|Dark Castle|Downstream|Encrypted|End Of The Road|Firing Range|Flooded Valley|Four Circles|Frozen Over|Geared|Haunted|Hedge|High Finance|In The Loop|Infernal|KartsNDarts|Logs|Lotus Island|Mesa|Monkey Meadow|Moon Landing|Muddy Puddles|Off The Coast|Park Path|Pat's Pond|Peninsula|Quad|Rake|Ravine|Resort|Skates|Spice Islands|Spillway|Spring Spring|Streambed|Town Center|Tree Stump|Underground|Winter Park|Workshop|X Factor|#Ouch
+		Gui, Add, DropDownList, x65 y77 w120 +Disabled vMap, Adora's Temple|Alpine Run|Another Brick|Balance|Bazaar|Bloddy Puddles|Candy Falls|Cargo|Carved|Chutes|Cornfield|Cracked|Cubism|Dark Castle|Downstream|Encrypted|End Of The Road|Firing Range|Flooded Valley|Four Circles|Frozen Over|Geared|Haunted|Hedge|High Finance|In The Loop|Infernal|KartsNDarts|Logs|Lotus Island|Mesa|Monkey Meadow|Moon Landing|Muddy Puddles|Off The Coast|Park Path|Pat's Pond|Peninsula|Quad|Rake|Ravine|Resort|Sanctuary|Skates|Spice Islands|Spillway|Spring Spring|Streambed|Town Center|Tree Stump|Underground|Winter Park|Workshop|X Factor|#Ouch
 		Gui, Add, Text, x12 y101 w79 h23 +0x200, Difficulty:
 		Gui, Add, DropDownList, x65 y101 w120 +Disabled vDifficulty, Alternate Bloons Round|Apopalypse|CHIMPS|Deflation|Double HP MOABs|Half Cash|Impoppable|Magic Monkeys Only|Military Monkeys Only|Primary Monkeys Only|Reverse|Standard (Easy)|Standard (Medium)|Standard (Hard)
 		Gui, Add, Text, x12 y125 w95 h23 +0x200, Hero:
-		Gui, Add, DropDownList, x65 y125 w120 +Disabled vHero, Admiral Brickell|Adora|Benjamin|Captain Churchhill|Etienne|Ezili|Gwendolin|Obyn Greenfoot|Pat Fusty|Quincy|Sauda|Striker Jones
+		Gui, Add, DropDownList, x65 y125 w120 +Disabled vHero, Admiral Brickell|Adora|Benjamin|Captain Churchhill|Etienne|Ezili|Gwendolin|Obyn Greenfoot|Pat Fusty|Psi|Quincy|Sauda|Striker Jones
 
 		Gui, Font, s12
 		Gui, Font, c0000FF
@@ -93,18 +99,6 @@
 		Gui, Add, Edit, x175 y180 w35 h15 +Number +Disabled vLoopAmount, 1000 ; Amount of times the bot plays the select map
 		Gui, Add, Text, x215 y180 w30 h15 +0x200, time(s)
 
-		Gui, Add, Text, x103 y196 w70 h15 +0x200, Input Delay:
-		Gui, Add, Edit, x175 y196 w35 h15 +Number +Disabled vInputDelay, 65 ; Used to as help compensate for Input Lag (in milliseconds)
-		Gui, Add, Text, x215 y196 w30 h15 +0x200, ms
-
-		Gui, Add, Text, x103 y212 w70 h15 +0x200, Map Delay:
-		Gui, Add, Edit, x175 y212 w35 h15 +Number +Disabled vMapLoadTime, 2000 ; Used to help compensate Loading Lag (in milliseconds)
-		Gui, Add, Text, x215 y212 w30 h15 +0x200, ms
-
-		Gui, Add, Text, x103 y228 w70 h15 +0x200, Pop-up Delay:
-		Gui, Add, Edit, x175 y228 w35 h15 +Number +Disabled vPopUpLoadTime, 650 ; Used to help compensate Animation Delay (in milliseconds)
-		Gui, Add, Text, x215 y228 w30 h15 +0x200, ms
-
 	; Initilization- GUI- Step 3
 		Gui, Font, s12
 		Gui, Font, c0000FF
@@ -117,24 +111,20 @@
 		Gui, Show, w517 h311, BotTD6
 
 	; Initilization- Input Delay
-		GuiControlGet, InputDelay,, InputDelay ;ControlGetText, InputDelay, %InputDelay%
 		SendMode, Event ;Input ; https://www.autohotkey.com/docs/commands/SendMode.htm
 		CoordMode, Mouse, Client ; https://www.autohotkey.com/docs/commands/CoordMode.htm
-		SetKeyDelay, %InputDelay%, %InputDelay% ; https://www.autohotkey.com/docs/commands/SetKeyDelay.htm
-		SetMouseDelay, %InputDelay% ; https://www.autohotkey.com/docs/commands/SetMouseDelay.htm
-		SetWinDelay, %InputDelay% ; https://www.autohotkey.com/docs/commands/SetWinDelay.htm
+		SetKeyDelay, 65, 65 ; https://www.autohotkey.com/docs/commands/SetKeyDelay.htm
+		SetMouseDelay, 65 ; https://www.autohotkey.com/docs/commands/SetMouseDelay.htm
+		SetWinDelay, 65 ; https://www.autohotkey.com/docs/commands/SetWinDelay.htm
 
 	; Initilization- Launch game client	
-		If !WinExist("BloonsTD6") { ; https://www.autohotkey.com/docs/commands/WinExist.htm
+		If !WinExist("BloonsTD6") { 		; https://www.autohotkey.com/docs/commands/WinExist.htm
 			Run, C:\Program Files (x86)\Steam\steamapps\common\BloonsTD6\BloonsTD6.exe ; https://www.autohotkey.com/docs/commands/Run.htm
-			GuiControlGet, MapLoadTime,, MapLoadTime
-			Sleep, % MapLoadTime * 4 ; Wait for game to update
-			WinActivate, BloonsTD6 ; https://www.autohotkey.com/docs/commands/WinActivate.htm
-			Click, 810, 820 ; Click to skip to Welcome Screen
-			GuiControlGet, PopUpLoadTime,, PopUpLoadTime
-			Sleep, % PopUpLoadTime ; Wait for "Play"
-			Click, 810, 820 ; "Play"
-			;Sleep, % MapLoadTime ; Wait for Main Menu to load
+			Sleep, % 10000					; Wait for game to update
+			WinActivate, BloonsTD6 			; https://www.autohotkey.com/docs/commands/WinActivate.htm
+			Click, 810, 820 				; Click to skip to Welcome Screen
+			Sleep, 650						; Wait for "Play"
+			Click, 810, 820 				; "Play"
 		}
 
 	; Initilization- End
@@ -154,9 +144,6 @@
 			Return
 		AdvancedSettingsToggle:
 			If Not AdvancedSettings {
-				GuiControl, Enable, InputDelay
-				GuiControl, Enable, MapLoadTime
-				GuiControl, Enable, PopUpLoadTime
 				GuiControl, Enable, DebugMode
 				GuiControl, Enable, Freeplay
 				GuiControl, Enable, StartOnMap
@@ -172,12 +159,6 @@
 				GuiControl, Enable, Difficulty
 				GuiControl, Enable, Hero
 			} Else If AdvancedSettings {
-				GuiControl, Text, InputDelay, 65
-				GuiControl, Disable, InputDelay
-				GuiControl, Text, MapLoadTime, 1996
-				GuiControl, Disable, MapLoadTime
-				GuiControl, Text, PopUpLoadTime, 650
-				GuiControl, Disable, PopUpLoadTime
 				GuiControl,, DebugMode, 0
 				GuiControl, Disable, DebugMode
 				GuiControl,, Freeplay, 0
@@ -293,26 +274,26 @@
 	;F3::Pause, Toggle ; https://www.autohotkey.com/docs/commands/Pause.htm
 	F2::StartBot()
 
-
 ; Custom Functions
 	AutoClickHero() {
 		global
 		Click, 90, 830 ; "Change Hero" on map menu
 		Sleep 200
-		If (HasVal(HeroListOrdered,Hero) >= 10) {
+		If (HasVal(HeroListOrdered,Hero) > 9) {
 			MouseMove, 1180, 820
-			Sleep 10
-			Send, {WheelUp 12}
-			HeroSelectionXPosition := 1440+175*(HasVal(HeroListOrdered,Hero)-12)
-		} Else If (HasVal(HeroListOrdered,Hero) < 10) {
+			Sleep 20
+			wheelUpAmount := 4*(HeroListOrdered.Length()-9)
+			Send, {WheelUp %wheelUpAmount%}
+			HeroSelectionXPosition := 1440+175*(HasVal(HeroListOrdered,Hero)-HeroListOrdered.Length())
+		} Else If (HasVal(HeroListOrdered,Hero) < 9) {
 			HeroSelectionXPosition := 110+175*(HasVal(HeroListOrdered,Hero)-1)
 		}
 		Click, %HeroSelectionXPosition%, 820
-		Sleep 10
+		Sleep 20
 		Click, 530, 560 ; "Select"
-		Sleep 10
+		Sleep 20
 		SendInput, {Esc} ; back to map menu
-		Sleep 100
+		Sleep 200
 		Return
 		}
 
@@ -362,7 +343,7 @@
 			Click, 1337, 610 ; Option 4b
 		}
 		Click, 950, 620 ; "Ok" overwirte save popup box
-		Sleep, % MapLoadTime ; Wait for map to load
+		Sleep, 2200 ; Wait for map to load
 		Click, 800, 610 ; "Ok" map rules popup box
 		Return
 		}
@@ -380,391 +361,40 @@
 	AssignMapVariables() {
 		global
 		If (Map = "Monkey Meadow") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Tree Stump") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Town Center") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Resort") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Lotus Island") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Candy Falls") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Winter Park") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Carved") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Park Path") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Alpine Run") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Frozen Over") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "In The Loop") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Cubism") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Four Circles") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Hedge") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "End Of The Road") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Logs") {
 			SafeX := 458, 		SafeY := 235
+			HeroX := 423, 		HeroY := 485
 			DartX := , 			DartY := 
 			BoomerangX := , 	BoomerangY := 
 			BombX := , 			BombY := 
@@ -776,7 +406,8 @@
 			BuccaneerX := , 	BuccaneerY := 
 			AceX := , 			AceY := 
 			HeliX := 266, 		HeliY := 586
-			MotarX := , 		MotarY := 
+			MortarX := , 		MortarY := 
+			DartlingX := ,		DartlingY := 
 			WizardX := 534, 	WizardY := 437
 			SuperX := ,			SuperY := 
 			NinjaX := 537, 		NinjaY := 488
@@ -784,806 +415,82 @@
 			AlchemistX := 473, 	AlchemistY := 578
 			DruidX := , 		DruidY := 
 			FarmX := 261, 		FarmY := 597
-			EngineerX := , 		EngineerY := 
 			SpikeX := 284, 		SpikeY := 703
 			VillageX := 396, 	VillageY := 578
-			HeroX := 423, 		HeroY := 485
+			EngineerX := , 		EngineerY := 
 		} Else If (Map = "Balance") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Encrypted") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Bazaar") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Adora's Temple") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Spring Spring") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "KartsNDarts") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Moon Landing") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Haunted") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Downstream") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Firing Range") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Cracked") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Streambed") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Chutes") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Rake") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Spice Islands") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "X Factor") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Mesa") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Geared") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Spillway") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Cargo") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Pat's Pond") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Peninsula") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "High Finance") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Another Brick") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Off The Coast") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Cornfield") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Underground") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
+		} Else If (Map = "Sanctuary") {
+			; NOT AVALIABLE
 		} Else If (Map = "Ravine") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Flooded Valley") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Infernal") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Bloddy Puddles") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Workshop") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Quad") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "Dark Castle") {
-			;Array123 := [Safe:[579,97],Hero:[615,560],Ninja:[610,366],Alchemist[480,395]]
-			SafeX := 579, 		SafeY := 97
-			DartX := , 			DartY :=
+			;MapCords := [Safe:[579,97],Hero:[615,560],Ninja:[610,366],Alchemist[480,395]]
+			SafeX:=579,			SafeY:=97
+			HeroX:=615,			HeroY:=560
+			DartX:=,			DartY:=
 			BoomerangX := , 	BoomerangY :=
 			BombX := , 			BombY :=
 			TackX := , 			TackY :=
@@ -1591,68 +498,24 @@
 			GlueX := , 			GlueY :=
 			SniperX := , 		SniperY :=
 			SubX := , 			SubY :=
-			BuccaneerX := , 	BuccaneerY :=
-			AceX := , 			AceY :=
-			HeliX := , 			HeliY :=
-			MotarX := , 		MotarY :=
+			BuccaneerX := , 	BuccaneerY := 
+			AceX := , 			AceY := 
+			HeliX := , 			HeliY := 
+			MortarX := , 		MortarY := 
+			DartlingX := ,		DartlingY := 
 			WizardX := ,	 	WizardY :=
 			SuperX := ,			SuperY :=
 			NinjaX := 610, 		NinjaY := 366
 			AlchemistX := 480, 	AlchemistY := 395
-			DruidX := , 		DruidY :=
-			FarmX := , 			FarmY :=
-			EngineerX := , 		EngineerY :=
-			SpikeX := , 		SpikeY :=
-			VillageX := , 		VillageY :=
-			HeroX := 615, 		HeroY := 560
+			DruidX := , 		DruidY := 
+			FarmX := , 			FarmY := 
+			SpikeX := , 		SpikeY := 
+			VillageX := , 		VillageY := 
+			EngineerX := , 		EngineerY := 
 		} Else If (Map = "Muddy Puddles") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		} Else If (Map = "#Ouch") {
-			SafeX := , 			SafeY := 
-			DartX := , 			DartY := 
-			BoomerangX := , 	BoomerangY := 
-			BombX := , 			BombY := 
-			TackX := , 			TackY := 
-			IceX := , 			IceY := 
-			GlueX := , 			GlueY := 
-			SniperX := , 		SniperY := 
-			SubX := , 			SubY := 
-			BuccaneerX := , 	BuccaneerY := 
-			AceX := , 			AceY := 
-			HeliX := , 			HeliY := 
-			MotarX := , 		MotarY := 
-			WizardX := ,	 	WizardY := 
-			SuperX := ,			SuperY := 
-			NinjaX := , 		NinjaY := 
-			AlchemistX := , 	AlchemistY := 
-			DruidX := , 		DruidY := 
-			FarmX := , 			FarmY := 
-			EngineerX := , 		EngineerY := 
-			SpikeX := , 		SpikeY := 
-			VillageX := , 		VillageY := 
-			HeroX := , 			HeroY := 
+			; NOT AVALIABLE
 		}
 		Return
 		}
@@ -1709,6 +572,8 @@
 			Send, {B} ; Heli Pilot
 		} Else If (tower = "Mortar") {
 			Send, {N} ; Mortar Monkey
+		} Else If (tower = "Dartling") {
+			Send, {M} ; Dartling Gunner
 		} Else If (tower = "Wizard") {
 			Send, {A} ; Wizard Monkey
 		} Else If (tower = "Super") {
@@ -1804,9 +669,6 @@
 		GuiControl, Disable, DebugMode
 		GuiControl, Disable, AdvancedSettings
 		GuiControl, Disable, LoopAmount
-		GuiControl, Disable, InputDelay
-		GuiControl, Disable, MapLoadTime
-		GuiControl, Disable, PopUpLoadTime
 		GuiControl, Disable, CustomBuild1
 		GuiControl, Disable, CustomBuild2
 		GuiControl, Disable, CustomBuild3
@@ -1820,9 +682,6 @@
 		GuiControlGet, StartOnMap,, StartOnMap
 		GuiControlGet, DebugMode,, DebugMode
 		GuiControlGet, LoopAmount,, LoopAmount
-		GuiControlGet, InputDelay,, InputDelay
-		GuiControlGet, MapLoadTime,, MapLoadTime
-		GuiControlGet, PopUpLoadTime,, PopUpLoadTime
 
 		WinActivate, BloonsTD6
 		If Not StartOnMap {
@@ -1833,18 +692,18 @@
 		}
 		AssignMapVariables()
 		Loop, %LoopAmount% {
-			Sleep, 20
+			Sleep, 100
 			Send, {SPACE} 									; Start round
-			Sleep, 10
+			Sleep, 20
 			Send, {SPACE} 									; Speed up round
 			PlayRounds()
 			
 			Click, 800, 760									; "Next" in victory pop-up
-			Sleep, % PopUpLoadTime * 2
+			Sleep, 1300
 			Click, 930, 700									; "Freeplay" in victory pop-up
-			Sleep, % PopUpLoadTime * 2						; Wait for freeplay rules pop-up
+			Sleep, 1350										; Wait for freeplay rules pop-up
 			Click, 791, 625									; Close freeplay rules pop-up ;SendInput, {Esc}
-			Sleep, % PopUpLoadTime * 2						; Wait for freeplay rules pop-up
+			Sleep, 1300										; Wait for freeplay rules pop-up
 			If DebugMode
 				SendInput, {F12}							; Screenshot final tower placements on map for analysis
 			If Freeplay {
@@ -1854,11 +713,11 @@
 				Click, 851, 625 							; "Restart" in restart? pop-up
 			} Else {
 				SendInput, {Esc} 							; Pause menu
-				Sleep, % PopUpLoadTime * 2					; Wait for pause pop-up
-				Click, 900, 700 							; "Restart" in victory pop-up
+				Sleep, 1300									; Wait for pause pop-up
+				Click, 1000, 700 							; "Restart" in victory pop-up
 				Click, 950, 600 							; "Restart" in restart? pop-up
 			}
-			Sleep, % MapLoadTime / 2						; Wait for map to re-load
+			Sleep, 1100										; Wait for map to re-load
 		}
 		ExitApp
 		}
@@ -1898,9 +757,9 @@
 			Upgrade("Ninja",3,"","","","","","") 			; 4/0/2 Ninja Round 35
 			Rest(79)										; Wait for victory pop-up Round 40
 		} Else If (Difficulty = "Standard (Medium)") {
-			;
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Standard (Hard)") {
-			;
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Impoppable") {
 			Create("Hero")									; Hero Round 6
 			Rest(30)
@@ -1963,385 +822,27 @@
 			Else
 				Rest(65)									; Balancing for time spent buidling bank
 			Rest(80)										; Wait for insta monkey pop-up Round 100
-			Sleep, % PopUpLoadTime * 3						; Wait for victory pop-up Round 100
-			/* Heli
-				Create("Heli") 								; 0/0/0 Heli Round 6
-					Rest(3)
-				Upgrade("Heli",1,"","","","","","") 		; 1/0/0 Heli Round 6
-					Rest(5)
-				Upgrade("Heli",1,"","","","","","") 		; 2/0/0 Heli Round 6
-					Rest(1)
-				Upgrade("Heli",2,"","","","","","") 		; 2/1/0 Heli Round 6
-					Rest(1)
-				Upgrade("Heli",2,"","","","","","") 		; 2/2/0 Heli Round 6
-					Rest(20)
-				Upgrade("Heli",1,"","","","","","") 		; 3/2/0 Heli Round 6
-					Rest(188)
-				Upgrade("Heli",1,"","","","","","") 		; 4/2/0 Heli Round 7
-					Rest(260)
-				Upgrade("Heli",1,"","","","","","") 		; 5/2/0 Heli Round 9
-				*/
-			/* Wizard
-				Create("Wizard") 							; 0/0/0 Wizard Round 100
-					Rest(120)
-				Upgrade("Wizard",1,1,1,1,3,3,"") 			; 4/0/2 Wizard Round 100
-					Rest(240)
-				Upgrade("Wizard",1,"","","","","","") 		; 5/0/2 Wizard Round 114
-				*/
+			Sleep, 2000										; Wait for victory pop-up Round 100
 		} Else If (Difficulty = "Deflation") {
-			Send, {K} ; Village_1 0-0-2
-			Sleep, 500
-			Click 777, 388
-			Sleep, 500
-			Click 777, 388
-			Sleep, 500
-			Loop, 2
-			{
-			Send, {SC035}
-			Sleep, 500
-			}
-			Click, 750, 100
-			Sleep, 500
-
-			Send, {U} ; Hero
-			Sleep, 500
-			;Click, 585, 379
-			Click, 615, 395
-			Sleep, 500
-			Click, 750, 100
-			Sleep, 500
-
-			Send, {W} ; Boomerang 0-2-4
-			Sleep, 500
-			Click, 683, 394
-			Sleep, 500
-			Click, 683, 394
-			Sleep, 500
-			Loop, 2
-			{
-			Send, {SC034}
-			Sleep, 500
-			}
-			Loop, 4
-			{
-			Send, {SC035}
-			Sleep, 500
-			}
-			Click, 750, 100
-			Sleep, 500
-
-			Send, {X} ; Sub 2-0-3
-			Sleep, 500
-			Click, 915, 388
-			Sleep, 500
-			Click, 915, 388
-			Sleep, 500
-			Loop, 2
-			{
-			Send, {SC033}
-			Sleep, 500
-			}
-			Loop, 3
-			{
-			Send, {SC035}
-			Sleep, 500
-			}
-			Click, 750, 100
-			Sleep, 500
-
-			Send, {X} ; Sub 2-3-0
-			Sleep, 500
-			Click, 915, 326
-			Sleep, 500
-			Click, 915, 326
-			Sleep, 500
-			Loop, 2
-			{
-			Send, {SC033}
-			Sleep, 500
-			}
-			Loop, 3
-			{
-			Send, {SC034}
-			Sleep, 500
-			}
-			Click, 750, 100
-			Sleep, 500
-
-			Click, 777, 388
-			Sleep, 500
-			Click, 282, 793 ; SELL Village_1
-			Sleep, 500
-			Click, 750, 100
-			Sleep, 500
-
-			Send, {K} ; Village_2 2-0-0
-			Sleep, 500
-			Click, 777, 388
-			Sleep, 500
-			Click, 777, 388
-			Sleep, 500
-			Loop, 2
-			{
-			Send, {SC033}
-			Sleep, 500
-			}
-			Click, 750, 100
-			Sleep, 500
-
-			Send, {J} ; Spike Factory 0-2-4
-			Sleep, 500
-			Click, 1277, 492
-			Sleep, 500
-			Click, 1277, 492
-			Sleep, 500
-			Loop, 2
-			{
-			Send, {SC034}
-			Sleep, 500
-			}
-			Loop, 4
-			{
-			Send, {SC035}
-			Sleep, 500
-			}
-			Click, 750, 100
-			Sleep, 500
-
-			Send, {F} ; Alchemist 3-0-0
-			Sleep, 500
-			Click, 1284, 429
-			Sleep, 500
-			Click, 1284, 429
-			Sleep, 500
-			Loop, 3
-			{
-			Send, {SC033}
-			Sleep, 500
-			}
-			Click, 750, 100
-			Sleep, 500
-
-			Send, {Q} ; Dart Monkey 0-1-2
-			Sleep, 500
-			Click, 414, 665
-			Sleep, 500
-			Click, 414, 665
-			Sleep, 500
-			Loop, 1
-			{
-			Send, {SC034}
-			Sleep, 500
-			}
-			Loop, 2
-			{
-			Send, {SC035}
-			Sleep, 500
-			}
-			Click, 750, 100
-			Sleep, 500
-
-			Send, {SPACE} ; Start round
-			Sleep, 500
-			Send, {SPACE} ; Speed up
-			Sleep, 500
-
-			Sleep, 380000 ; Wait for Victory popup
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Double HP MOABs") {
-			Send, {U}
-			Click, 422, 450
-			Sleep, 17000
-
-			Send, {D}
-			Click, 526, 453 ; 0-0-0 Ninja
-
-				Click, 605, 83
-				Sleep, 20000
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033} ; 1-0-0 Ninja
-
-				Click, 605, 83
-				Sleep, 65000
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033}
-			Send, {SC035} ; 2-0-1 Ninja
-
-				Click, 605, 83
-				Sleep, 15000F
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033} ; 3-0-1 Ninja
-
-				Click, 605, 83
-				Sleep, 20000
-				Click, 605, 83
-
-			Send, {F}
-			Click, 527, 505 ; 0-0-0 Alchemist
-
-				Click, 605, 83
-				Sleep, 20000
-				Click, 605, 83
-
-			Click, 527, 505
-			Send, {SC033}
-			Send, {SC033} ; 2-0-0 Alchemist
-
-				Click, 605, 83
-				Sleep, 60000
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033} ; 4-0-1 Ninja
-
-				Click, 605, 83
-				Sleep, 15000
-				Click, 605, 83
-
-			Click, 527, 505
-			Send, {SC033} ; 3-0-0 Alchemist
-
-				Click, 605, 83
-				Sleep, 35000
-				Click, 605, 83
-
-			Click, 527, 505
-			Send, {SC035}
-			Send, {SC035} ; 3-0-2 Alchemist
-
-				Click, 605, 83
-				Sleep, 25000
-				Click, 605, 83
-
-			Click, 527, 505
-			Send, {SC033} ; 4-0-2 Alchemist
-
-				Click, 605, 83
-				Sleep, 15000
-				Click, 605, 83
-
-			Click, 526, 453,
-			Send, {SC035} ; 4-0-2 Ninja
-
-				Click, 605, 83
-				Sleep, 260000 ; save for grandmaster ninja before 60 around 59
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033} ; 5-0-2 Ninja
-
-				Click, 605, 83
-				Sleep, 3650000 ; wait for Victory popup
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Alternate Bloons Round") {
-					
-			Send, {U}
-			Click, 422, 450
-			Sleep, 17000
-
-			Send, {D}
-			Click, 526, 453 ; 0-0-0 Ninja
-
-				Click, 605, 83
-				Sleep, 20000
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033} ; 1-0-0 Ninja
-
-				Click, 605, 83
-				Sleep, 65000
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033}
-			Send, {SC035} ; 2-0-1 Ninja
-
-				Click, 605, 83
-				Sleep, 15000F
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033} ; 3-0-1 Ninja
-
-				Click, 605, 83
-				Sleep, 20000
-				Click, 605, 83
-
-			Send, {F}
-			Click, 527, 505 ; 0-0-0 Alchemist
-
-				Click, 605, 83
-				Sleep, 20000
-				Click, 605, 83
-
-			Click, 527, 505
-			Send, {SC033}
-			Send, {SC033} ; 2-0-0 Alchemist
-
-				Click, 605, 83
-				Sleep, 60000
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033} ; 4-0-1 Ninja
-
-				Click, 605, 83
-				Sleep, 15000
-				Click, 605, 83
-
-			Click, 527, 505
-			Send, {SC033} ; 3-0-0 Alchemist
-
-				Click, 605, 83
-				Sleep, 35000
-				Click, 605, 83
-
-			Click, 527, 505
-			Send, {SC035}
-			Send, {SC035} ; 3-0-2 Alchemist
-
-				Click, 605, 83
-				Sleep, 25000
-				Click, 605, 83
-
-			Click, 527, 505
-			Send, {SC033} ; 4-0-2 Alchemist
-
-				Click, 605, 83
-				Sleep, 15000
-				Click, 605, 83
-
-			Click, 526, 453,
-			Send, {SC035} ; 4-0-2 Ninja
-
-				Click, 605, 83
-				Sleep, 280000 ; save for grandmaster ninja around 57
-				Click, 605, 83
-
-			Click, 526, 453
-			Send, {SC033} ; 5-0-2 Ninja
-
-				Click, 605, 83
-				Sleep, 3800000 ; wait for Victory popup
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Reverse") {
-			;
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Apopalypse") {
-			;
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Half Cash") {
-			;
+			; NOT AVALIABLE
 		} Else If (Difficulty = "CHIMPS") {
-			;
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Primary Monkeys Only") {
-			;
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Military Monkeys Only") {
-			;
+			; NOT AVALIABLE
 		} Else If (Difficulty = "Magic Monkeys Only") {
-			;
+			; NOT AVALIABLE
 		}
 		Return
 		}
