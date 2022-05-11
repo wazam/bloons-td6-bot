@@ -1,13 +1,13 @@
 ; Read Me
 	LastUpdate := "2020-10-20"
-	BloonsVersion := "v21.0.3266"
+	BloonsVersion := "v21.1.3307"
 	
 /* To Do
 	1) Screen OCR reader for in-game money
 	2) Work dynamically with all screen sizes
 	3) Replace sleep/wait with BlockInput https://www.autohotkey.com/docs/commands/BlockInput.htm
 	4) Arrays for Map selection/pages
-	5) Arrays for Monkey coordinates per Map 
+	5) Arrays for Monkey X&Y coordinates, per Map 
 	*/
 
 ; Initilization
@@ -1819,15 +1819,15 @@
 			Upgrade("Alchemist",1,"","","","","","") 		; 2/0/0 Alchemist Round 25
 			Rest(22)
 			Upgrade("Alchemist",1,"","","","","","") 		; 3/0/0 Alchemist Round 27
-			Rest(36)
-			Upgrade("Alchemist",1,"","","","","","") 		; 4/0/0 Alchemist Round 32
-			Rest(11) ;lock
-			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/1 Alchemist Round 35
-			Rest(5)
-			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/2 Alchemist Round 36
+			Rest(40) ;lock
+			Upgrade("Alchemist",1,"","","","","","") 		; 4/0/0 Alchemist Round 33
+			Rest(12) ;lock
+			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/1 Alchemist Round 34
 			Rest(4)
-			Upgrade("Ninja",3,"","","","","","") 			; 4/0/2 Ninja Round 36
-			Rest(81)										; Wait for victory pop-up Round 40
+			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/2 Alchemist Round 34
+			Rest(3)
+			Upgrade("Ninja",3,"","","","","","") 			; 4/0/2 Ninja Round 35
+			Rest(78)										; Wait for victory pop-up Round 40
 		} Else If (Difficulty = "Standard (Medium)") {
 			;
 		} Else If (Difficulty = "Standard (Hard)") {
