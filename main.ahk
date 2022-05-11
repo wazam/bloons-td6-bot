@@ -4,10 +4,11 @@
 	3) vMap
 	4) vHero
 	*/
-	LastUpdateDate := "2022-02-22"
-	LastBloonsVersion := "v30.1.5016"
+	LastUpdateDate := "2022-02-24"
+	LastBloonsVersion := "v30.2.5032"
 
 /* To do
+	!) Drag through map selection instead of click to fix 1024x768 misclick 
 	1) Arrays for Monkey X&Y cords, per Map, per Difficulty ; https://www.autohotkey.com/docs/Objects.htm#Usage_Simple_Arrays ; https://www.autohotkey.com/docs/misc/Arrays.htm
 	2) Replace sleep/wait with BlockInput		; https://www.autohotkey.com/docs/commands/BlockInput.htm
 	3) Screen OCR reader for in-game money(?)	; https://www.autohotkey.com/docs/commands/ImageSearch.htm
