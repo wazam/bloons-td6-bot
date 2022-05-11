@@ -1,6 +1,6 @@
 ; Read Me
-	LastUpdate := "2020-07-22"
-	BloonsVersion := "v19.2.2916"
+	LastUpdate := "2020-10-09"
+	BloonsVersion := "v20.1.3123"
 	ReadyForGeneralRelease := No
 	
 /* To Do
@@ -8,8 +8,8 @@
 	replace sleep/wait with BlockInput ; https://www.autohotkey.com/docs/commands/BlockInput.htm
 		This will break all timing-based features to be rewritten
 			possibly look for screen reader to make dynamic based on in-game money
-	remove Pause (doesnt resume properly after pause)
-	better variable names
+	remove Pause (doesnt resume properly after pause anyway)
+	better variable names(?)
 	arrays for monkey cords
 	arrays for map selection
 	*/
@@ -63,7 +63,7 @@
 		Gui, Add, GroupBox, x8 y80 w245 h100, Step 1: Create your build:
 		Gui, Font
 		Gui, Add, Text, x12 y105 w81 h21 +0x200, Map:
-		Gui, Add, DropDownList, x65 y105 w120 vMap, Monkey Meadow|Tree Stump|Town Center|Lotus Island|Candy Falls|Winter Park|Carved|Park Path|Alpine Run|Frozen Over|In The Loop|Cubism|Four Circles|Hedge|End Of The Road|Logs|Bazaar|Adora's Temple|Spring Spring|KartsNDarts|Moon Landing|Haunted|Downstream|Firing Range|Cracked|Streambed|Chutes|Rake|Spice Islands|Geared|Spillway|Cargo|Pat's Pond|Peninsula|High Finance|Another Brick|Off The Coast|Cornfield|Underground|Flooded Valley|Infernal|Bloddy Puddles|Workshop|Quad|Dark Castle|Muddy Puddles|#Ouch
+		Gui, Add, DropDownList, x65 y105 w120 vMap, Monkey Meadow|Tree Stump|Town Center|Lotus Island|Candy Falls|Winter Park|Carved|Park Path|Alpine Run|Frozen Over|In The Loop|Cubism|Four Circles|Hedge|End Of The Road|Logs|Bazaar|Adora's Temple|Spring Spring|KartsNDarts|Moon Landing|Haunted|Downstream|Firing Range|Cracked|Streambed|Chutes|Rake|Spice Islands|Mesa|Geared|Spillway|Cargo|Pat's Pond|Peninsula|High Finance|Another Brick|Off The Coast|Cornfield|Underground|Flooded Valley|Infernal|Bloddy Puddles|Workshop|Quad|Dark Castle|Muddy Puddles|#Ouch
 		If A_IsCompiled and Not ReadyForGeneralRelease
 			GuiControl, Disable, Map
 		Gui, Add, Text, x12 y129 w79 h23 +0x200, Difficulty:
@@ -71,7 +71,7 @@
 		If A_IsCompiled and Not ReadyForGeneralRelease
 			GuiControl, Disable, Difficulty
 		Gui, Add, Text, x12 y153 w95 h23 +0x200, Hero:
-		Gui, Add, DropDownList, x65 y153 w120 vHero, Quincy|Gwendolin|Striker Jones|Obyn Greenfoot|Admiral Brickell|Captain Churchhill|Benjamin|Ezili|Pat Fusty|Adora
+		Gui, Add, DropDownList, x65 y153 w120 vHero, Quincy|Gwendolin|Striker Jones|Obyn Greenfoot|Etienne|Captain Churchhill|Benjamin|Ezili|Pat Fusty|Adora|Admiral Brickell
 		If A_IsCompiled and Not ReadyForGeneralRelease
 			GuiControl, Disable, Hero
 		Gui, Font, s12
@@ -295,22 +295,28 @@
 			Click, 280, 820
 		} Else If (Hero = "Striker Jones") {
 			Click, 460, 820
-		}  Else If (Hero = "Obyn Greenfoot") {
+		} Else If (Hero = "Obyn Greenfoot") {
 			Click, 630, 820
-		} Else If (Hero = "Admiral Brickell") {
+		} Else If (Hero = "Etienne") {
 			Click, 810, 820
-		}  Else If (Hero = "Captain Churchhill") {
+		} Else If (Hero = "Captain Churchhill") {
 			Click, 980, 820
-		}  Else If (Hero = "Benjamin") {
+		} Else If (Hero = "Benjamin") {
 			Click, 1160, 820
-		}  Else If (Hero = "Ezili") {
+		} Else If (Hero = "Ezili") {
 			Click, 1350, 820
-		}  Else If (Hero = "Pat Fusty") {
+		} Else If (Hero = "Pat Fusty") {
 			Click, 1520, 820
-		}  Else If (Hero = "Adora") {
+		} Else If (Hero = "Adora") {
+			MouseMove, 1350, 820
+			Sleep, 100
+			Send, {WheelUp 7}
+			Sleep, 100
+			Click, 1350, 820
+		} Else If (Hero = "Admiral Brickell") {
 			MouseMove, 1520, 820
 			Sleep, 100
-			Send, {WheelUp 4}
+			Send, {WheelUp 7}
 			Sleep, 100
 			Click, 1520, 820
 		}
@@ -337,9 +343,9 @@
 			ClickNextMapPage := 4
 		} Else If (Map = "Spice Islands") {
 			ClickNextMapPage := 5
-		} Else If (Map = "Geared" or Map = "Spillway" or Map = "Cargo" or Map = "Pat's Pond" or Map = "Peninsula" or Map = "High Finance") {
+		} Else If (Map = "Mesa" or Map = "Geared" or Map = "Spillway" or Map = "Cargo" or Map = "Pat's Pond" or Map = "Peninsula") {
 			ClickNextMapPage := 6
-		} Else If (Map = "Another Brick" or Map = "Off The Coast" or Map = "Cornfield" or Map = "Underground") {
+		} Else If (Map = "High Finance" or Map = "Another Brick" or Map = "Off The Coast" or Map = "Cornfield" or Map = "Underground") {
 			ClickNextMapPage := 7
 		} Else If (Map = "Flooder Valley" or Map = "Infernal" or Map = "Bloddy Puddles" or Map = "Workshop" or Map = "Quad" or Map = "Dark Castle") {
 			ClickNextMapPage := 8
@@ -348,17 +354,17 @@
 		}
 		Loop, % ClickNextMapPage
 			Click, 1370, 360
-		If (	   Map = "Monkey Meadow" 	or Map = "Carved" 		or Map = "Four Cirles" 		or Map = "Bazaar" 			or Map = "Downstream" 	or Map = "Spice Islands"	or Map = "Geared"		or Map = "Another Brick" 	or Map = "Flooded Valley" 	or Map = "Muddy Puddles") {
+		If (	   Map = "Monkey Meadow" 	or Map = "Carved" 		or Map = "Four Cirles" 		or Map = "Bazaar" 			or Map = "Downstream" 	or Map = "Spice Islands"	or Map = "Mesa"			or Map = "High Finance" 	or Map = "Flooded Valley" 	or Map = "Muddy Puddles") {
 			Click, 450, 200
-		} Else If (Map = "Tree Stump" 		or Map = "Park Path" 	or Map = "Hedge" 			or Map = "Adora's Temple" 	or Map = "Firing Range" 							or Map = "Spillway" 	or Map = "Off The Coast" 	or Map = "Infernal" 		or Map = "#Ouch") {
+		} Else If (Map = "Tree Stump" 		or Map = "Park Path" 	or Map = "Hedge" 			or Map = "Adora's Temple" 	or Map = "Firing Range" 							or Map = "Geared" 		or Map = "Another Brick" 	or Map = "Infernal" 		or Map = "#Ouch") {
 			Click, 800, 200
-		} Else If (Map = "Town Center" 		or Map = "Alpine Run" 	or Map = "End Of The Road" 	or Map = "Spring Spring" 	or Map = "Cracked" 									or Map = "Cargo" 		or Map = "Cornfield"		or Map = "Bloddy Puddles") {
+		} Else If (Map = "Town Center" 		or Map = "Alpine Run" 	or Map = "End Of The Road" 	or Map = "Spring Spring" 	or Map = "Cracked" 									or Map = "Spillway" 	or Map = "Off The Coast"	or Map = "Bloddy Puddles") {
 			Click, 1150, 200
-		} Else If (Map = "Lotus Island" 	or Map = "Frozen Over" 	or Map = "Logs" 			or Map = "KartsNDarts" 		or Map = "Streambed" 								or Map = "Pat's Pond" 	or Map = "Underground"		or Map = "Workshop") {
+		} Else If (Map = "Lotus Island" 	or Map = "Frozen Over" 	or Map = "Logs" 			or Map = "KartsNDarts" 		or Map = "Streambed" 								or Map = "Cargo" 		or Map = "Cornfield"		or Map = "Workshop") {
 			Click, 450, 500
-		} Else If (Map = "Candy Falls" 		or Map = "In The Loop" 								or Map = "Moon Landing" 	or Map = "Chutes" 									or Map = "Peninsula" 								or Map = "Quad") {
+		} Else If (Map = "Candy Falls" 		or Map = "In The Loop" 								or Map = "Moon Landing" 	or Map = "Chutes" 									or Map = "Pat's Pond" 	or Map = "Underground"		or Map = "Quad") {
 			Click, 800, 500
-		} Else If (Map = "Winter Park" 		or Map = "Cubism" 									or Map = "Haunted" 			or Map = "Rake" 									or Map = "High Finance"								or Map = "Dark Castle") {
+		} Else If (Map = "Winter Park" 		or Map = "Cubism" 									or Map = "Haunted" 			or Map = "Rake" 									or Map = "Peninsula"								or Map = "Dark Castle") {
 			Click, 1150, 500
 		}	
 		Return
@@ -1092,6 +1098,30 @@
 			SpikeX := , 		SpikeY := 
 			VillageX := , 		VillageY := 
 			HeroX := , 			HeroY := 
+		} Else If (Map = "Mesa") {
+			SafeX := , 			SafeY := 
+			DartX := , 			DartY := 
+			BoomerangX := , 	BoomerangY := 
+			BombX := , 			BombY := 
+			TackX := , 			TackY := 
+			IceX := , 			IceY := 
+			GlueX := , 			GlueY := 
+			SniperX := , 		SniperY := 
+			SubX := , 			SubY := 
+			BuccaneerX := , 	BuccaneerY := 
+			AceX := , 			AceY := 
+			HeliX := , 			HeliY := 
+			MotarX := , 		MotarY := 
+			WizardX := ,	 	WizardY := 
+			SuperX := ,			SuperY := 
+			NinjaX := , 		NinjaY := 
+			AlchemistX := , 	AlchemistY := 
+			DruidX := , 		DruidY := 
+			FarmX := , 			FarmY := 
+			EngineerX := , 		EngineerY := 
+			SpikeX := , 		SpikeY := 
+			VillageX := , 		VillageY := 
+			HeroX := , 			HeroY := 
 		} Else If (Map = "Geared") {
 			SafeX := , 			SafeY := 
 			DartX := , 			DartY := 
@@ -1752,13 +1782,13 @@
 			Upgrade("Ninja",1,"","","","","","")			; 3/0/1 Ninja Round 10
 			Rest(89)
 			Upgrade("Ninja",1,"","","","","","") 			; 4/0/1 Ninja Round 19
-			Rest(6)
+			Rest(7)
 			Create("Alchemist") 							; 0/0/0 Alchemist Round 21
 			Rest(3)
 			Upgrade("Alchemist",1,"","","","","","") 		; 1/0/0 Alchemist Round 24
 			Rest(3)
 			Upgrade("Alchemist",1,"","","","","","") 		; 2/0/0 Alchemist Round 25
-			Rest(23)
+			Rest(22)
 			Upgrade("Alchemist",1,"","","","","","") 		; 3/0/0 Alchemist Round 27
 			Rest(36)
 			Upgrade("Alchemist",1,"","","","","","") 		; 4/0/0 Alchemist Round 32
@@ -1768,7 +1798,7 @@
 			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/2 Alchemist Round 34
 			Rest(5)
 			Upgrade("Ninja",3,"","","","","","") 			; 4/0/2 Ninja Round 34
-			Rest(80)										; Wait for victory pop-up Round 40
+			Rest(83)										; Wait for victory pop-up Round 40
 		} Else If (Difficulty = "Standard (Medium)") {
 			;
 		} Else If (Difficulty = "Standard (Hard)") {
