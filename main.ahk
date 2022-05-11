@@ -1,6 +1,6 @@
 ; Read Me
-	LastUpdate := "2020-12-04"
-	BloonsVersion := "v22.0"
+	LastUpdate := "2020-12-09"
+	BloonsVersion := "v22.1.3473"
 	
 /* To Do
 	1) Screen OCR reader for in-game money
