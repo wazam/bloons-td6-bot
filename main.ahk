@@ -1,6 +1,6 @@
 ; Read Me
-	LastUpdate := "2020-10-20"
-	BloonsVersion := "v21.1.3307"
+	LastUpdate := "2020-12-04"
+	BloonsVersion := "v22.0"
 	
 /* To Do
 	1) Screen OCR reader for in-game money
@@ -56,7 +56,7 @@
 		Gui, Add, GroupBox, x9 y52 w245 h100, Step 1: Create your build:
 		Gui, Font ; reset font to default
 		Gui, Add, Text, x12 y77 w81 h21 +0x200, Map:
-		Gui, Add, DropDownList, x65 y77 w120 +Disabled vMap, Monkey Meadow|Tree Stump|Town Center|Lotus Island|Candy Falls|Winter Park|Carved|Park Path|Alpine Run|Frozen Over|In The Loop|Cubism|Four Circles|Hedge|End Of The Road|Logs|Encrypted|Bazaar|Adora's Temple|Spring Spring|KartsNDarts|Moon Landing|Haunted|Downstream|Firing Range|Cracked|Streambed|Chutes|Rake|Spice Islands|Mesa|Geared|Spillway|Cargo|Pat's Pond|Peninsula|High Finance|Another Brick|Off The Coast|Cornfield|Underground|Flooded Valley|Infernal|Bloddy Puddles|Workshop|Quad|Dark Castle|Muddy Puddles|#Ouch
+		Gui, Add, DropDownList, x65 y77 w120 +Disabled vMap, Monkey Meadow|Tree Stump|Town Center|Skates|Lotus Island|Candy Falls|Winter Park|Carved|Park Path|Alpine Run|Frozen Over|In The Loop|Cubism|Four Circles|Hedge|End Of The Road|Logs|Encrypted|Bazaar|Adora's Temple|Spring Spring|KartsNDarts|Moon Landing|Haunted|Downstream|Firing Range|Cracked|Streambed|Chutes|Rake|Spice Islands|X Factor|Mesa|Geared|Spillway|Cargo|Pat's Pond|Peninsula|High Finance|Another Brick|Off The Coast|Cornfield|Underground|Flooded Valley|Infernal|Bloddy Puddles|Workshop|Quad|Dark Castle|Muddy Puddles|#Ouch
 		Gui, Add, Text, x12 y101 w79 h23 +0x200, Difficulty:
 		Gui, Add, DropDownList, x65 y101 w120 +Disabled vDifficulty, Standard (Easy)|Primary Monkeys Only|Deflation|Standard (Medium)|Military Monkeys Only|Apopalypse|Reverse|Standard (Hard)|Magic Monkeys Only|Double HP MOABs|Half Cash|Alternate Bloons Round|Impoppable|CHIMPS
 		Gui, Add, Text, x12 y125 w95 h23 +0x200, Hero:
@@ -336,11 +336,11 @@
 		Click, 700, 800 ; "Play"
 
 		;arr_Map_MonkeyMeadow := Object("page", 1, "spot", 1)
-		If (Map = "Monkey Meadow" or Map = "Tree Stump" or Map = "Town Center" or Map = "Lotus Island" or Map = "Candy Falls" or Map = "Winter Park") {
+		If (Map = "Monkey Meadow" or Map = "Tree Stump" or Map = "Town Center" or Map = "Skates" or Map = "Lotus Island" or Map = "Candy Falls") {
 			ClickNextMapPage := 0
-		} Else If (Map = "Carved" or Map = "Park Path" or Map = "Alpine Run" or Map = "Frozen Over" or Map = "In The Loop" or Map = "Cubism") {
+		} Else If (Map = "Winter Park" or Map = "Carved" or Map = "Park Path" or Map = "Alpine Run" or Map = "Frozen Over" or Map = "In The Loop") {
 			ClickNextMapPage := 1
-		} Else If (Map = "Four Circles" or Map = "Hedge" or Map = "End Of The Road" or Map = "Logs") {
+		} Else If (Map = "Cubism" or Map = "Four Circles" or Map = "Hedge" or Map = "End Of The Road" or Map = "Logs") {
 			ClickNextMapPage := 2
 		} Else If (Map = "Encrypted" or Map =  "Bazaar" or Map = "Adora's Temple" or Map = "Spring Spring" or Map = "KartsNDarts" or Map = "Moon Landing") {
 			ClickNextMapPage := 3
@@ -348,9 +348,9 @@
 			ClickNextMapPage := 4
 		} Else If (Map = "Rake" or Map = "Spice Islands") {
 			ClickNextMapPage := 5
-		} Else If (Map = "Mesa" or Map = "Geared" or Map = "Spillway" or Map = "Cargo" or Map = "Pat's Pond" or Map = "Peninsula") {
+		} Else If (Map = "X Factor" or Map = "Mesa" or Map = "Geared" or Map = "Spillway" or Map = "Cargo" or Map = "Pat's Pond") {
 			ClickNextMapPage := 6
-		} Else If (Map = "High Finance" or Map = "Another Brick" or Map = "Off The Coast" or Map = "Cornfield" or Map = "Underground") {
+		} Else If (Map = "Peninsula" or Map = "High Finance" or Map = "Another Brick" or Map = "Off The Coast" or Map = "Cornfield" or Map = "Underground") {
 			ClickNextMapPage := 7
 		} Else If (Map = "Flooder Valley" or Map = "Infernal" or Map = "Bloddy Puddles" or Map = "Workshop" or Map = "Quad" or Map = "Dark Castle") {
 			ClickNextMapPage := 8
@@ -359,21 +359,21 @@
 		}
 		Loop, % ClickNextMapPage
 			Click, 1370, 360
-		If (	   Map = "Monkey Meadow" 	or Map = "Carved" 		or Map = "Four Cirles" 		or Map = "Encrypted" 		or Map = "Haunted" 		or Map = "Spice Islands"	or Map = "Mesa"			or Map = "High Finance" 	or Map = "Flooded Valley" 	or Map = "Muddy Puddles") {
+		If (Map = "Monkey Meadow" or Map = "Winter Park" or Map = "Cubism" or Map = "Encrypted" or Map = "Haunted" or Map = "Rake"	or Map = "X Factor" or Map = "Peninsula" or Map = "Flooded Valley" or Map = "Muddy Puddles") {
 			Click, 450, 200
-		} Else If (Map = "Tree Stump" 		or Map = "Park Path" 	or Map = "Hedge" 			or Map = "Bazaar" 			or Map = "Downstream" 	or Map = "Rake"				or Map = "Geared" 		or Map = "Another Brick" 	or Map = "Infernal" 		or Map = "#Ouch") {
+		} Else If (Map = "Tree Stump" or Map = "Carved" or Map = "Four Circles" or Map = "Bazaar" or Map = "Downstream" or Map = "Spice Islands" or Map = "Mesa" or Map = "High Finance" or Map = "Infernal" or Map = "#Ouch") {
 			Click, 800, 200
-		} Else If (Map = "Town Center" 		or Map = "Alpine Run" 	or Map = "End Of The Road" 	or Map = "Adora's Temple" 	or Map = "Firing Range" 							or Map = "Spillway" 	or Map = "Off The Coast"	or Map = "Bloddy Puddles") {
+		} Else If (Map = "Town Center" or Map = "Park Path" or Map = "Hedge" or Map = "Adora's Temple" or Map = "Firing Range" or Map = "Geared" or Map = "Another Brick" or Map = "Bloddy Puddles") {
 			Click, 1150, 200
-		} Else If (Map = "Lotus Island" 	or Map = "Frozen Over" 	or Map = "Logs" 			or Map = "Spring Spring" 	or Map = "Cracked" 									or Map = "Cargo" 		or Map = "Cornfield"		or Map = "Workshop") {
+		} Else If (Map = "Skates" or Map = "Alpine Run" or Map = "End Of The Road" or Map = "Spring Spring" or Map = "Cracked" or Map = "Spillway" or Map = "Off The Coast" or Map = "Workshop") {
 			Click, 450, 500
-		} Else If (Map = "Candy Falls" 		or Map = "In The Loop" 								or Map = "KartsNDarts" 		or Map = "Streambed" 								or Map = "Pat's Pond" 	or Map = "Underground"		or Map = "Quad") {
+		} Else If (Map = "Lotus Island" or Map = "Frozen Over" or Map = "Logs" or Map = "KartsNDarts" or Map = "Streambed" or Map = "Cargo" or Map = "Cornfield" or Map = "Quad") {
 			Click, 800, 500
-		} Else If (Map = "Winter Park" 		or Map = "Cubism" 									or Map = "Moon Landing" 	or Map = "Chutes" 									or Map = "Peninsula"								or Map = "Dark Castle") {
+		} Else If (Map = "Candy Falls" or Map = "In The Loop" or Map = "Moon Landing" or Map = "Chutes" or Map = "Pat's Pond" or Map = "Underground" or Map = "Dark Castle") {
 			Click, 1150, 500
-		}	
+		}
 		Return
-		} 
+		}
 
 	AutoClickDifficulty() {
 		global
