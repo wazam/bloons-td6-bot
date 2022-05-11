@@ -1,17 +1,13 @@
 ; Read Me
-	LastUpdate := "2020-10-09"
-	BloonsVersion := "v20.1.3123"
-	ReadyForGeneralRelease := No
+	LastUpdate := "2020-10-20"
+	BloonsVersion := "v21.0.3266"
 	
 /* To Do
-	make work in all screen sizes
-	replace sleep/wait with BlockInput ; https://www.autohotkey.com/docs/commands/BlockInput.htm
-		This will break all timing-based features to be rewritten
-			possibly look for screen reader to make dynamic based on in-game money
-	remove Pause (doesnt resume properly after pause anyway)
-	better variable names(?)
-	arrays for monkey cords
-	arrays for map selection
+	1) Screen OCR reader for in-game money
+	2) Work dynamically with all screen sizes
+	3) Replace sleep/wait with BlockInput https://www.autohotkey.com/docs/commands/BlockInput.htm
+	4) Arrays for Map selection/pages
+	5) Arrays for Monkey coordinates per Map 
 	*/
 
 ; Initilization
@@ -22,7 +18,7 @@
 		;SetBatchLines -1 				; https://www.autohotkey.com/docs/commands/SetBatchLines.htm
 		#WinActivateForce 				; https://www.autohotkey.com/docs/commands/_WinActivateForce.htm
 		SetTitleMatchMode, 3 			; https://www.autohotkey.com/docs/commands/SetTitleMatchMode.htm
-		global Map, Difficulty, Hero, Freeplay, StartOnMap, DebugMode, AdvancedSettings, LoopAmount, InputDelay, MapLoadTime, PopUpLoadTime
+		global Map,Difficulty,Hero,AdvancedSettings,StartOnMap,Freeplay,DebugMode,LoopAmount,InputDelay,MapLoadTime,PopUpLoadTime
 		global DartX,DartY,BoomerangX,BoomerangY,BombX,BombY,TackX,TackY,IceX,IceY,GlueX,GlueY,SniperX,SniperY,SubX,SubY,BuccaneerX,BuccaneerY,AceX,AceY,HeliX,HeliY,MotarX,MotarY,WizardX,WizardY,SuperX,SuperY,NinjaX,NinjaY,AlchemistX,AlchemistY,DruidX,DruidY,FarmX,FarmY,EngineerX,EngineerY,SpikeX,SpikeY,VillageX,VillageY,HeroX,HeroY
 
 	; Initilization- Tray
@@ -39,109 +35,84 @@
 		}
 		Menu, Tray, Click, 1 			; 1 click to open tray menu icon
 		Menu, Tray, Add, Show GUI, ShowGui
+		Menu, Tray, Default, Show Gui	; Bold "Show GUI" in menu icon options
 		Menu, Tray, Add, Hide GUI, HideGui
 		Menu, Tray, Add, Start, F2
-		Menu, Tray, Add, Pause, F3
 		Menu, Tray, Add, Exit, F4
-		If A_IsCompiled { 				; https://www.autohotkey.com/docs/Variables.htm#IsCompiled
-			Menu, Tray, NoStandard
-			Menu, Tray, Default, Show Gui
-		} 
+		Menu, Tray, NoStandard
+		;If A_IsCompiled {}				; https://www.autohotkey.com/docs/Variables.htm#IsCompiled
 
 	; Initilization- GUI- Header
 		Gui +Owner 						; https://www.autohotkey.com/docs/commands/Gui.htm#Owner
-		Gui, Add, Text, x8 y00 w420 h15 +0x200, Auto clicker for Bloons TD 6 %BloonsVersion%.
-		Gui, Add, Text, x8 y16 w420 h15 +0x200, Made by wazam123@gmail.com and last updated on %LastUpdate%.
+		Gui, Add, Text, x9 y04 w515 h15 +0x200, Simple auto clicker for Bloons TD 6 %BloonsVersion%, last updated on %LastUpdate% by Wazam.
 		Gui, Font, cFF0000 				; https://www.autohotkey.com/docs/commands/Gui.htm#Font
-		Gui, Add, Text, x8 y32 w420 h15 +0x200, Game client Screen Size must be 1600x900 (please adjust in settings).
-		Gui, Font
-		Gui, Add, Text, x8 y48 w430 h30, Do not interupt the bot's use of your mouse/keyboard while it is actively moving/clicking in the client window, but while the bot is resting/sleeping please feel free to use your PC.
+		Gui, Add, Text, x9 y20 w515 h15 +0x200, Game client Screen Size must be 1600x900 (please adjust in settings).
+		Gui, Font ; reset font to default
+		Gui, Add, Text, x9 y36 w515 h15, Try to not interupt the bot's use of your mouse and keyboard while it is clicking.
 
 	; Initilization- GUI- Step 1
 		Gui, Font, s12
 		Gui, Font, c0000FF
-		Gui, Add, GroupBox, x8 y80 w245 h100, Step 1: Create your build:
-		Gui, Font
-		Gui, Add, Text, x12 y105 w81 h21 +0x200, Map:
-		Gui, Add, DropDownList, x65 y105 w120 vMap, Monkey Meadow|Tree Stump|Town Center|Lotus Island|Candy Falls|Winter Park|Carved|Park Path|Alpine Run|Frozen Over|In The Loop|Cubism|Four Circles|Hedge|End Of The Road|Logs|Bazaar|Adora's Temple|Spring Spring|KartsNDarts|Moon Landing|Haunted|Downstream|Firing Range|Cracked|Streambed|Chutes|Rake|Spice Islands|Mesa|Geared|Spillway|Cargo|Pat's Pond|Peninsula|High Finance|Another Brick|Off The Coast|Cornfield|Underground|Flooded Valley|Infernal|Bloddy Puddles|Workshop|Quad|Dark Castle|Muddy Puddles|#Ouch
-		If A_IsCompiled and Not ReadyForGeneralRelease
-			GuiControl, Disable, Map
-		Gui, Add, Text, x12 y129 w79 h23 +0x200, Difficulty:
-		Gui, Add, DropDownList, x65 y129 w120 vDifficulty, Standard (Easy)|Primary Monkeys Only|Deflation|Standard (Medium)|Military Monkeys Only|Apopalypse|Reverse|Standard (Hard)|Magic Monkeys Only|Double HP MOABs|Half Cash|Alternate Bloons Round|Impoppable|CHIMPS
-		If A_IsCompiled and Not ReadyForGeneralRelease
-			GuiControl, Disable, Difficulty
-		Gui, Add, Text, x12 y153 w95 h23 +0x200, Hero:
-		Gui, Add, DropDownList, x65 y153 w120 vHero, Quincy|Gwendolin|Striker Jones|Obyn Greenfoot|Etienne|Captain Churchhill|Benjamin|Ezili|Pat Fusty|Adora|Admiral Brickell
-		If A_IsCompiled and Not ReadyForGeneralRelease
-			GuiControl, Disable, Hero
+		Gui, Add, GroupBox, x9 y52 w245 h100, Step 1: Create your build:
+		Gui, Font ; reset font to default
+		Gui, Add, Text, x12 y77 w81 h21 +0x200, Map:
+		Gui, Add, DropDownList, x65 y77 w120 +Disabled vMap, Monkey Meadow|Tree Stump|Town Center|Lotus Island|Candy Falls|Winter Park|Carved|Park Path|Alpine Run|Frozen Over|In The Loop|Cubism|Four Circles|Hedge|End Of The Road|Logs|Encrypted|Bazaar|Adora's Temple|Spring Spring|KartsNDarts|Moon Landing|Haunted|Downstream|Firing Range|Cracked|Streambed|Chutes|Rake|Spice Islands|Mesa|Geared|Spillway|Cargo|Pat's Pond|Peninsula|High Finance|Another Brick|Off The Coast|Cornfield|Underground|Flooded Valley|Infernal|Bloddy Puddles|Workshop|Quad|Dark Castle|Muddy Puddles|#Ouch
+		Gui, Add, Text, x12 y101 w79 h23 +0x200, Difficulty:
+		Gui, Add, DropDownList, x65 y101 w120 +Disabled vDifficulty, Standard (Easy)|Primary Monkeys Only|Deflation|Standard (Medium)|Military Monkeys Only|Apopalypse|Reverse|Standard (Hard)|Magic Monkeys Only|Double HP MOABs|Half Cash|Alternate Bloons Round|Impoppable|CHIMPS
+		Gui, Add, Text, x12 y125 w95 h23 +0x200, Hero:
+		Gui, Add, DropDownList, x65 y125 w120 +Disabled vHero, Quincy|Gwendolin|Striker Jones|Obyn Greenfoot|Etienne|Captain Churchhill|Benjamin|Ezili|Pat Fusty|Adora|Admiral Brickell
+
 		Gui, Font, s12
 		Gui, Font, c0000FF
-		Gui, Add, GroupBox, x264 y80 w245 h175, ... or choose a custom game:
-		Gui, Font
-		Gui, Add, Radio, x268 y105 w230 h15 gCustomBuild1 vCustomBuild1 +Checked, Dark Castle, Easy, Quincy
-		Gui, Add, Radio, x268 y121 w230 h15 gCustomBuild2 vCustomBuild2, Logs, Impoppable, Freeplay, Obyn
-		Gui, Add, Radio, x268 y138 w230 h15 gCustomBuild3 vCustomBuild3, Logs, Impoppable, Obyn
-		Gui, Add, Radio, x268 y153 w230 h15 gCustomBuild4 vCustomBuild4, Logs, Easy, Freeplay, Obyn
-		If A_IsCompiled and Not ReadyForGeneralRelease
-			GuiControl, Disable, CustomBuild4
-		Gui, Add, Radio, x268 y169 w230 h15 gCustomBuild5 vCustomBuild5, Logs, Easy, Obyn
-		If A_IsCompiled and Not ReadyForGeneralRelease
-			GuiControl, Disable, CustomBuild5
-		Gui, Add, Radio, x268 y185 w230 h15 gCustomBuild6 vCustomBuild6, Logs, Impoppable, Freeplay, Debug
-		If A_IsCompiled and Not ReadyForGeneralRelease
-			GuiControl, Disable, CustomBuild6
-		Gui, Add, Radio, x268 y201 w230 h15 gCustomBuild7 vCustomBuild7, Logs, Impoppable, Freeplay, Debug, On Map
-		If A_IsCompiled and Not ReadyForGeneralRelease
-			GuiControl, Disable, CustomBuild7
-		Gui, Add, Radio, x268 y217 w230 h15 gCustomBuild8 vCustomBuild8, Logs, Impoppable, Debug
-		If A_IsCompiled
-			GuiControl, Disable, CustomBuild8
-		Gui, Add, Radio, x268 y233 w230 h15 gCustomBuild9 vCustomBuild9, Logs, Impoppable, Debug, On Map
-		If A_IsCompiled
-			GuiControl, Disable, CustomBuild9
-		Gui, Add, Text, x264 y260 w240 h80, `fDARK CASTLE EASY for monkey bucks and holiday event rewards (the quickest expert-map). `n`fLOGS IMPOPPABLE for level XP and insta monkey (the easiest map). `n`fFREEPLAY for BADs and Fortified Bloons (rounds 100-120 have x10 rounds 1-100).
+		Gui, Add, GroupBox, x264 y52 w245 h175, ... or choose a custom game:
+		Gui, Font ; reset font to default
+		Gui, Add, Radio, x268 y77 w230 h15 +Checked gCustomBuild1 vCustomBuild1, Dark Castle, Easy, Quincy
+		Gui, Add, Radio, x268 y93 w230 h15 gCustomBuild2 vCustomBuild2, Logs, Impoppable, Obyn
+		Gui, Add, Radio, x268 y109 w230 h15 +Disabled gCustomBuild3 vCustomBuild3, Logs, Impoppable, Freeplay, Obyn
+		Gui, Add, Radio, x268 y125 w230 h15 +Disabled gCustomBuild4 vCustomBuild4, Logs, Easy, Freeplay, Obyn
+		Gui, Add, Radio, x268 y141 w230 h15 +Disabled gCustomBuild5 vCustomBuild5, Logs, Easy, Obyn
+		Gui, Add, Radio, x268 y157 w230 h15 +Disabled gCustomBuild6 vCustomBuild6, Logs, Impoppable, Freeplay, Debug
+		Gui, Add, Radio, x268 y173 w230 h15 +Disabled gCustomBuild7 vCustomBuild7, Logs, Impoppable, Freeplay, Debug, On Map
+		Gui, Add, Radio, x268 y189 w230 h15 +Disabled gCustomBuild8 vCustomBuild8, Logs, Impoppable, Debug
+		Gui, Add, Radio, x268 y205 w230 h15 +Disabled gCustomBuild9 vCustomBuild9, Logs, Impoppable, Debug, On Map
+		Gui, Add, Text, x264 y230 w240 h80, `fDARK CASTLE EASY for holiday event rewards and monkey money (the quickest expert-map). `n`fLOGS IMPOPPABLE for level XP and insta monkey (the easiest map). `n`fFREEPLAY for BADs and Fortified Bloons (rounds 100-120 have x10 rounds 1-100).
 
 	; Initilization- GUI- Step 2
 		Gui, Font, s12
 		Gui, Font, c0000FF
-		Gui, Add, GroupBox, x8 y185 w245 h95, Step 2: Adjust optional settings:
-		Gui, Font ; restarts
-		Gui, Add, CheckBox, x12 y210 w80 h15 vFreeplay, Freeplay ; Continue to play extra rounds (for less xp) after completing the map difficulty's objective
-		If A_IsCompiled and Not ReadyForGeneralRelease
-			GuiControl, Disable, Freeplay
-		Gui, Add, CheckBox, x12 y226 w80 h15 vStartOnMap, Start on Map ; Skips SelectHero() Map() Difficulty() and Restarts to begin Round 1 ASAP
-		Gui, Add, CheckBox, x12 y242 w80 h15 vDebugMode, Debug Mode ; Records screenshots for analysis after each purchase/upgrade
-		If A_IsCompiled
-			GuiControl, Disable, DebugMode
-		Gui, Add, CheckBox, x12 y258 w80 h15 gAdvancedSettingsToggle vAdvancedSettings, Advanced ; Enables changing Input/Map/Pop-up Delay values from GUI
+		Gui, Add, GroupBox, x8 y155 w245 h95, Step 2: Adjust optional settings:
+		Gui, Font ; reset font to default
+		Gui, Add, CheckBox, x12 y180 w80 h15 gAdvancedSettingsToggle vAdvancedSettings, Advanced ; Enables changing Input/Map/Pop-up Delay values from GUI
+		Gui, Add, CheckBox, x12 y196 w80 h15 +Disabled vStartOnMap, Start on Map ; Skips SelectHero() Map() Difficulty() and Restarts to begin Round 1 ASAP
+		Gui, Add, CheckBox, x12 y212 w80 h15 +Disabled vFreeplay, Freeplay ; Continue to play extra rounds (for less xp) after completing the map difficulty's objective
+		Gui, Add, CheckBox, x12 y228 w80 h15 +Disabled vDebugMode, Debug Mode ; Records screenshots for analysis after each purchase/upgrade
 
-		Gui, Add, Text, x103 y210 w70 h15 +0x200, Loop Amount:
-		Gui, Add, Edit, x175 y210 w35 h15 +Number vLoopAmount, 1000 ; Amount of times the bot plays the select map
-		Gui, Add, Text, x215 y210 w30 h15 +0x200, time(s)
+		Gui, Add, Text, x103 y180 w70 h15 +0x200, Loop Amount:
+		Gui, Add, Edit, x175 y180 w35 h15 +Number +Disabled vLoopAmount, 1000 ; Amount of times the bot plays the select map
+		Gui, Add, Text, x215 y180 w30 h15 +0x200, time(s)
 
-		Gui, Add, Text, x103 y226 w70 h15 +0x200, Input Delay:
-		Gui, Add, Edit, x175 y226 w35 h15 +Number +Disabled vInputDelay, 65 ; Used to as help compensate for Input Lag (in milliseconds)
-		Gui, Add, Text, x215 y226 w30 h15 +0x200, ms
+		Gui, Add, Text, x103 y196 w70 h15 +0x200, Input Delay:
+		Gui, Add, Edit, x175 y196 w35 h15 +Number +Disabled vInputDelay, 65 ; Used to as help compensate for Input Lag (in milliseconds)
+		Gui, Add, Text, x215 y196 w30 h15 +0x200, ms
 
-		Gui, Add, Text, x103 y242 w70 h15 +0x200, Map Delay:
-		Gui, Add, Edit, x175 y242 w35 h15 +Number +Disabled vMapLoadTime, 2000 ; Used to help compensate Loading Lag (in milliseconds)
-		Gui, Add, Text, x215 y242 w30 h15 +0x200, ms
+		Gui, Add, Text, x103 y212 w70 h15 +0x200, Map Delay:
+		Gui, Add, Edit, x175 y212 w35 h15 +Number +Disabled vMapLoadTime, 2000 ; Used to help compensate Loading Lag (in milliseconds)
+		Gui, Add, Text, x215 y212 w30 h15 +0x200, ms
 
-		Gui, Add, Text, x103 y258 w70 h15 +0x200, Pop-up Delay:
-		Gui, Add, Edit, x175 y258 w35 h15 +Number +Disabled vPopUpLoadTime, 650 ; Used to help compensate Animation Delay (in milliseconds)
-		Gui, Add, Text, x215 y258 w30 h15 +0x200, ms
+		Gui, Add, Text, x103 y228 w70 h15 +0x200, Pop-up Delay:
+		Gui, Add, Edit, x175 y228 w35 h15 +Number +Disabled vPopUpLoadTime, 650 ; Used to help compensate Animation Delay (in milliseconds)
+		Gui, Add, Text, x215 y228 w30 h15 +0x200, ms
 
 	; Initilization- GUI- Step 3
 		Gui, Font, s12
 		Gui, Font, c0000FF
-		Gui, Add, GroupBox, x8 y285 w245 h55, Step 3: Run the bot:
-		Gui, Font
-		;Gui, Font, Bold
-		Gui, Add, Button, x12 y310 w75 h25 gF2, F2 (START)
-		Gui, Add, Button, x92 y310 w75 h25 gF3, F3 (PAUSE)
-		Gui, Add, Button, x172 y310 w75 h25 gF4, F4 (EXIT)
+		Gui, Add, GroupBox, x8 y250 w245 h55, Step 3: Run the bot:
+		Gui, Font ; reset font to default
+		Gui, Font, Bold
+		Gui, Add, Button, x12 y275 w118 h25 gF2, F2 (START)
+		Gui, Add, Button, x129 y275 w118 h25 gF4, F4 (EXIT)
 
-		Gui, Show, w517 h348, BotTD6
+		Gui, Show, w517 h311, BotTD6
 
 	; Initilization- Input Delay
 		GuiControlGet, InputDelay,, InputDelay ;ControlGetText, InputDelay, %InputDelay%
@@ -184,6 +155,20 @@
 				GuiControl, Enable, InputDelay
 				GuiControl, Enable, MapLoadTime
 				GuiControl, Enable, PopUpLoadTime
+				GuiControl, Enable, DebugMode
+				GuiControl, Enable, Freeplay
+				GuiControl, Enable, StartOnMap
+				GuiControl, Enable, LoopAmount
+				GuiControl, Enable, CustomBuild3
+				GuiControl, Enable, CustomBuild4
+				GuiControl, Enable, CustomBuild5
+				GuiControl, Enable, CustomBuild6
+				GuiControl, Enable, CustomBuild7
+				GuiControl, Enable, CustomBuild8
+				GuiControl, Enable, CustomBuild9
+				GuiControl, Enable, Map
+				GuiControl, Enable, Difficulty
+				GuiControl, Enable, Hero
 			} Else If AdvancedSettings {
 				GuiControl, Text, InputDelay, 65
 				GuiControl, Disable, InputDelay
@@ -191,6 +176,38 @@
 				GuiControl, Disable, MapLoadTime
 				GuiControl, Text, PopUpLoadTime, 650
 				GuiControl, Disable, PopUpLoadTime
+				GuiControl,, DebugMode, 0
+				GuiControl, Disable, DebugMode
+				GuiControl,, Freeplay, 0
+				GuiControl, Disable, Freeplay
+				GuiControl,, StartOnMap, 0
+				GuiControl, Disable, StartOnMap
+				GuiControl, Text, LoopAmount, 1000
+				GuiControl, Disable, LoopAmount
+				
+				GuiControl, , CustomBuild9, 0
+				GuiControl, Disable, CustomBuild9
+				GuiControl, , CustomBuild8, 0
+				GuiControl, Disable, CustomBuild8
+				GuiControl, , CustomBuild7, 0
+				GuiControl, Disable, CustomBuild7
+				GuiControl, , CustomBuild6, 0
+				GuiControl, Disable, CustomBuild6
+				GuiControl, , CustomBuild5, 0
+				GuiControl, Disable, CustomBuild5
+				GuiControl, , CustomBuild4, 0
+				GuiControl, Disable, CustomBuild4
+				GuiControl, , CustomBuild3, 0
+				GuiControl, Disable, CustomBuild3
+				GuiControl, , CustomBuild2, 0
+				GuiControl, , CustomBuild1, 1
+
+				GuiControl, ChooseString, Map, Dark Castle
+				GuiControl, Disable, Map
+				GuiControl, ChooseString, Difficulty, Standard (Easy)
+				GuiControl, Disable, Difficulty
+				GuiControl, ChooseString, Hero, Quincy
+				GuiControl, Disable, Hero
 			}
 			AdvancedSettings := !AdvancedSettings
 			Return
@@ -203,25 +220,22 @@
 			GuiControl,, Freeplay, 0
 			GuiControl,, StartOnMap, 0
 			GuiControl,, DebugMode, 0
-			GuiControl,, AdvancedSettings, 0
 			Return
 		CustomBuild2:
-			GuiControl, ChooseString, Map, Logs
-			GuiControl, ChooseString, Difficulty, Impoppable
-			GuiControl, ChooseString, Hero, Obyn Greenfoot
-			GuiControl,, Freeplay, 1
-			GuiControl,, StartOnMap, 0
-			GuiControl,, DebugMode, 0
-			GuiControl,, AdvancedSettings, 0
-			Return
-		CustomBuild3:
 			GuiControl, ChooseString, Map, Logs
 			GuiControl, ChooseString, Difficulty, Impoppable
 			GuiControl, ChooseString, Hero, Obyn Greenfoot
 			GuiControl,, Freeplay, 0
 			GuiControl,, StartOnMap, 0
 			GuiControl,, DebugMode, 0
-			GuiControl,, AdvancedSettings, 0
+			Return
+		CustomBuild3:
+			GuiControl, ChooseString, Map, Logs
+			GuiControl, ChooseString, Difficulty, Impoppable
+			GuiControl, ChooseString, Hero, Obyn Greenfoot
+			GuiControl,, Freeplay, 1
+			GuiControl,, StartOnMap, 0
+			GuiControl,, DebugMode, 0
 			Return
 		CustomBuild4:
 			GuiControl, ChooseString, Map, Logs
@@ -230,16 +244,14 @@
 			GuiControl,, Freeplay, 1
 			GuiControl,, StartOnMap, 0
 			GuiControl,, DebugMode, 0
-			GuiControl,, AdvancedSettings, 0
 			Return
 		CustomBuild5:
-			;GuiControl, ChooseString, Map, 
-			;GuiControl, ChooseString, Difficulty, 
-			;GuiControl, ChooseString, Hero, 
-			;GuiControl,, Freeplay, 0
-			;GuiControl,, StartOnMap, 0
-			;GuiControl,, DebugMode, 0
-			;GuiControl,, AdvancedSettings, 0
+			GuiControl, ChooseString, Map, Logs
+			GuiControl, ChooseString, Difficulty, Standard (Easy)
+			GuiControl, ChooseString, Hero, Obyn Greenfoot
+			GuiControl,, Freeplay, 0
+			GuiControl,, StartOnMap, 0
+			GuiControl,, DebugMode, 0
 			Return
 		CustomBuild6:
 			GuiControl, ChooseString, Map, Logs
@@ -248,7 +260,6 @@
 			GuiControl,, Freeplay, 1
 			GuiControl,, StartOnMap, 0
 			GuiControl,, DebugMode, 1
-			GuiControl,, AdvancedSettings, 0
 			Return
 		CustomBuild7:
 			GuiControl, ChooseString, Map, Logs
@@ -257,7 +268,6 @@
 			GuiControl,, Freeplay, 1
 			GuiControl,, StartOnMap, 1
 			GuiControl,, DebugMode, 1
-			GuiControl,, AdvancedSettings, 0
 			Return
 		CustomBuild8:
 			GuiControl, ChooseString, Map, Logs
@@ -266,7 +276,6 @@
 			GuiControl,, Freeplay, 0
 			GuiControl,, StartOnMap, 0
 			GuiControl,, DebugMode, 1
-			GuiControl,, AdvancedSettings, 0
 			Return
 		CustomBuild9:
 			GuiControl, ChooseString, Map, Logs
@@ -275,14 +284,11 @@
 			GuiControl,, Freeplay, 0
 			GuiControl,, StartOnMap, 1
 			GuiControl,, DebugMode, 1
-			GuiControl,, AdvancedSettings, 0
 			Return
-	
-	Return
 
 ; Hotkeys
 	F4::ExitApp ; https://www.autohotkey.com/docs/commands/ExitApp.htm
-	F3::Pause, Toggle ; https://www.autohotkey.com/docs/commands/Pause.htm
+	;F3::Pause, Toggle ; https://www.autohotkey.com/docs/commands/Pause.htm
 	F2::StartBot()
 
 ; Custom Functions
@@ -330,18 +336,17 @@
 		Click, 700, 800 ; "Play"
 
 		;arr_Map_MonkeyMeadow := Object("page", 1, "spot", 1)
-
 		If (Map = "Monkey Meadow" or Map = "Tree Stump" or Map = "Town Center" or Map = "Lotus Island" or Map = "Candy Falls" or Map = "Winter Park") {
 			ClickNextMapPage := 0
 		} Else If (Map = "Carved" or Map = "Park Path" or Map = "Alpine Run" or Map = "Frozen Over" or Map = "In The Loop" or Map = "Cubism") {
 			ClickNextMapPage := 1
 		} Else If (Map = "Four Circles" or Map = "Hedge" or Map = "End Of The Road" or Map = "Logs") {
 			ClickNextMapPage := 2
-		} Else If (Map = "Bazaar" or Map = "Adora's Temple" or Map = "Spring Spring" or Map = "KartsNDarts" or Map = "Moon Landing" or Map = "Haunted") {
+		} Else If (Map = "Encrypted" or Map =  "Bazaar" or Map = "Adora's Temple" or Map = "Spring Spring" or Map = "KartsNDarts" or Map = "Moon Landing") {
 			ClickNextMapPage := 3
-		} Else If (Map = "Downstream" or Map = "Firing Range" or Map = "Cracked" or Map = "Streambed" or Map = "Chutes" or Map = "Rake") {
+		} Else If (Map = "Haunted" or Map = "Downstream" or Map = "Firing Range" or Map = "Cracked" or Map = "Streambed" or Map = "Chutes") {
 			ClickNextMapPage := 4
-		} Else If (Map = "Spice Islands") {
+		} Else If (Map = "Rake" or Map = "Spice Islands") {
 			ClickNextMapPage := 5
 		} Else If (Map = "Mesa" or Map = "Geared" or Map = "Spillway" or Map = "Cargo" or Map = "Pat's Pond" or Map = "Peninsula") {
 			ClickNextMapPage := 6
@@ -354,17 +359,17 @@
 		}
 		Loop, % ClickNextMapPage
 			Click, 1370, 360
-		If (	   Map = "Monkey Meadow" 	or Map = "Carved" 		or Map = "Four Cirles" 		or Map = "Bazaar" 			or Map = "Downstream" 	or Map = "Spice Islands"	or Map = "Mesa"			or Map = "High Finance" 	or Map = "Flooded Valley" 	or Map = "Muddy Puddles") {
+		If (	   Map = "Monkey Meadow" 	or Map = "Carved" 		or Map = "Four Cirles" 		or Map = "Encrypted" 		or Map = "Haunted" 		or Map = "Spice Islands"	or Map = "Mesa"			or Map = "High Finance" 	or Map = "Flooded Valley" 	or Map = "Muddy Puddles") {
 			Click, 450, 200
-		} Else If (Map = "Tree Stump" 		or Map = "Park Path" 	or Map = "Hedge" 			or Map = "Adora's Temple" 	or Map = "Firing Range" 							or Map = "Geared" 		or Map = "Another Brick" 	or Map = "Infernal" 		or Map = "#Ouch") {
+		} Else If (Map = "Tree Stump" 		or Map = "Park Path" 	or Map = "Hedge" 			or Map = "Bazaar" 			or Map = "Downstream" 	or Map = "Rake"				or Map = "Geared" 		or Map = "Another Brick" 	or Map = "Infernal" 		or Map = "#Ouch") {
 			Click, 800, 200
-		} Else If (Map = "Town Center" 		or Map = "Alpine Run" 	or Map = "End Of The Road" 	or Map = "Spring Spring" 	or Map = "Cracked" 									or Map = "Spillway" 	or Map = "Off The Coast"	or Map = "Bloddy Puddles") {
+		} Else If (Map = "Town Center" 		or Map = "Alpine Run" 	or Map = "End Of The Road" 	or Map = "Adora's Temple" 	or Map = "Firing Range" 							or Map = "Spillway" 	or Map = "Off The Coast"	or Map = "Bloddy Puddles") {
 			Click, 1150, 200
-		} Else If (Map = "Lotus Island" 	or Map = "Frozen Over" 	or Map = "Logs" 			or Map = "KartsNDarts" 		or Map = "Streambed" 								or Map = "Cargo" 		or Map = "Cornfield"		or Map = "Workshop") {
+		} Else If (Map = "Lotus Island" 	or Map = "Frozen Over" 	or Map = "Logs" 			or Map = "Spring Spring" 	or Map = "Cracked" 									or Map = "Cargo" 		or Map = "Cornfield"		or Map = "Workshop") {
 			Click, 450, 500
-		} Else If (Map = "Candy Falls" 		or Map = "In The Loop" 								or Map = "Moon Landing" 	or Map = "Chutes" 									or Map = "Pat's Pond" 	or Map = "Underground"		or Map = "Quad") {
+		} Else If (Map = "Candy Falls" 		or Map = "In The Loop" 								or Map = "KartsNDarts" 		or Map = "Streambed" 								or Map = "Pat's Pond" 	or Map = "Underground"		or Map = "Quad") {
 			Click, 800, 500
-		} Else If (Map = "Winter Park" 		or Map = "Cubism" 									or Map = "Haunted" 			or Map = "Rake" 									or Map = "Peninsula"								or Map = "Dark Castle") {
+		} Else If (Map = "Winter Park" 		or Map = "Cubism" 									or Map = "Moon Landing" 	or Map = "Chutes" 									or Map = "Peninsula"								or Map = "Dark Castle") {
 			Click, 1150, 500
 		}	
 		Return
@@ -786,6 +791,30 @@
 			SpikeX := 284, 		SpikeY := 703
 			VillageX := 396, 	VillageY := 578
 			HeroX := 423, 		HeroY := 485
+		} Else If (Map = "Encrypted") {
+			SafeX := , 			SafeY := 
+			DartX := , 			DartY := 
+			BoomerangX := , 	BoomerangY := 
+			BombX := , 			BombY := 
+			TackX := , 			TackY := 
+			IceX := , 			IceY := 
+			GlueX := , 			GlueY := 
+			SniperX := , 		SniperY := 
+			SubX := , 			SubY := 
+			BuccaneerX := , 	BuccaneerY := 
+			AceX := , 			AceY := 
+			HeliX := , 			HeliY := 
+			MotarX := , 		MotarY := 
+			WizardX := ,	 	WizardY := 
+			SuperX := ,			SuperY := 
+			NinjaX := , 		NinjaY := 
+			AlchemistX := , 	AlchemistY := 
+			DruidX := , 		DruidY := 
+			FarmX := , 			FarmY := 
+			EngineerX := , 		EngineerY := 
+			SpikeX := , 		SpikeY := 
+			VillageX := , 		VillageY := 
+			HeroX := , 			HeroY := 
 		} Else If (Map = "Bazaar") {
 			SafeX := , 			SafeY := 
 			DartX := , 			DartY := 
@@ -1699,7 +1728,7 @@
 		global
 		Gui, Submit
 		
-		;no chnages to GUI after F2/Start
+		; no chnages to GUI after F2/Start
 			GuiControl, Disable, Map
 			GuiControl, Disable, Difficulty
 			GuiControl, Disable, Hero
@@ -1770,7 +1799,7 @@
 		If (Difficulty = "Standard (Easy)") {
 			Create("Hero") 									; Hero Round 1
 			If Not (Hero = "Quincy")
-				Rest(10)									; adjust for higher Hero cost leaving less $ for upgrades
+				Rest(10)									; adjust for higher Hero cost leaving less $ for upgrades [rough estimate of 10 seconds]
 			Create("Ninja")									; 0/0/0 Ninja Round 1
 			Rest(16) ;lock
 			Upgrade("Ninja",1,"","","","","","") 			; 1/0/0 Ninja Round 3
@@ -1792,13 +1821,13 @@
 			Upgrade("Alchemist",1,"","","","","","") 		; 3/0/0 Alchemist Round 27
 			Rest(36)
 			Upgrade("Alchemist",1,"","","","","","") 		; 4/0/0 Alchemist Round 32
+			Rest(11) ;lock
+			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/1 Alchemist Round 35
 			Rest(5)
-			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/1 Alchemist Round 33
-			Rest(9)
-			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/2 Alchemist Round 34
-			Rest(5)
-			Upgrade("Ninja",3,"","","","","","") 			; 4/0/2 Ninja Round 34
-			Rest(83)										; Wait for victory pop-up Round 40
+			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/2 Alchemist Round 36
+			Rest(4)
+			Upgrade("Ninja",3,"","","","","","") 			; 4/0/2 Ninja Round 36
+			Rest(81)										; Wait for victory pop-up Round 40
 		} Else If (Difficulty = "Standard (Medium)") {
 			;
 		} Else If (Difficulty = "Standard (Hard)") {
