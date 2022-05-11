@@ -1,6 +1,6 @@
 ; Read Me
-	LastUpdate := "2021-04-16"
-	BloonsVersion := "v25.0.3817"
+	LastUpdate := "2021-05-24"
+	BloonsVersion := "v25.1.3828"
 	
 /* To Do
 	1) Screen OCR reader for in-game money
@@ -1833,6 +1833,7 @@
 		}
 		AssignMapVariables()
 		Loop, %LoopAmount% {
+			Sleep, 20
 			Send, {SPACE} 									; Start round
 			Sleep, 10
 			Send, {SPACE} 									; Speed up round
@@ -1842,7 +1843,7 @@
 			Sleep, % PopUpLoadTime * 2
 			Click, 930, 700									; "Freeplay" in victory pop-up
 			Sleep, % PopUpLoadTime * 2						; Wait for freeplay rules pop-up
-			Click, 791, 596									; Close freeplay rules pop-up ;SendInput, {Esc}
+			Click, 791, 625									; Close freeplay rules pop-up ;SendInput, {Esc}
 			Sleep, % PopUpLoadTime * 2						; Wait for freeplay rules pop-up
 			If DebugMode
 				SendInput, {F12}							; Screenshot final tower placements on map for analysis
@@ -1868,34 +1869,34 @@
 			Create("Hero") 									; Hero Round 1
 			If Not (Hero = "Quincy")
 				Rest(10)									; adjust for higher Hero cost leaving less $ for upgrades [rough estimate of 10 seconds]
-			Create("Ninja")									; 0/0/0 Ninja Round 1
+			Create("Ninja")									; 0/0/0 Ninja Round 1 $425
 			Rest(16) ;lock
-			Upgrade("Ninja",1,"","","","","","") 			; 1/0/0 Ninja Round 3
-			Rest(14) ;lock
-			Upgrade("Ninja",3,"","","","","","") 			; 1/0/1 Ninja Round 5
-			Rest(13)
-			Upgrade("Ninja",1,"","","","","","")			; 2/0/1 Ninja Round 7
-			Rest(37)
-			Upgrade("Ninja",1,"","","","","","")			; 3/0/1 Ninja Round 10
-			Rest(89)
-			Upgrade("Ninja",1,"","","","","","") 			; 4/0/1 Ninja Round 19
-			Rest(7)
-			Create("Alchemist") 							; 0/0/0 Alchemist Round 21
+			Upgrade("Ninja",1,"","","","","","") 			; 1/0/0 Ninja Round 3 $255
+			Rest(11) ;lock
+			Upgrade("Ninja",3,"","","","","","") 			; 1/0/1 Ninja Round 5 $210
+			Rest(12)
+			Upgrade("Ninja",1,"","","","","","")			; 2/0/1 Ninja Round 7 $295
+			Rest(35) ;lock
+			Upgrade("Ninja",1,"","","","","","")			; 3/0/1 Ninja Round 10 $620
+			Rest(96)
+			Upgrade("Ninja",1,"","","","","","") 			; 4/0/1 Ninja Round 19 $2335
+			Rest(5)
+			Create("Alchemist") 							; 0/0/0 Alchemist Round 21 $
 			Rest(3)
-			Upgrade("Alchemist",1,"","","","","","") 		; 1/0/0 Alchemist Round 24
-			Rest(3)
-			Upgrade("Alchemist",1,"","","","","","") 		; 2/0/0 Alchemist Round 25
-			Rest(22)
-			Upgrade("Alchemist",1,"","","","","","") 		; 3/0/0 Alchemist Round 27
-			Rest(40) ;lock
-			Upgrade("Alchemist",1,"","","","","","") 		; 4/0/0 Alchemist Round 33
-			Rest(12) ;lock
-			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/1 Alchemist Round 34
+			Upgrade("Alchemist",1,"","","","","","") 		; 1/0/0 Alchemist Round 23 $
 			Rest(4)
-			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/2 Alchemist Round 34
-			Rest(3)
+			Upgrade("Alchemist",1,"","","","","","") 		; 2/0/0 Alchemist Round 24 $
+			Rest(20)
+			Upgrade("Alchemist",1,"","","","","","") 		; 3/0/0 Alchemist Round 27 $
+			Rest(38) ;lock
+			Upgrade("Alchemist",1,"","","","","","") 		; 4/0/0 Alchemist Round 33 $2550
+			Rest(9) ;lock
+			Upgrade("Alchemist",2,"","","","","","") 		; 4/1/0 Alchemist Round 34
+			Rest(7)
+			Upgrade("Alchemist",2,"","","","","","") 		; 4/2/0 Alchemist Round 34
+			Rest(5)
 			Upgrade("Ninja",3,"","","","","","") 			; 4/0/2 Ninja Round 35
-			Rest(75)										; Wait for victory pop-up Round 40
+			Rest(79)										; Wait for victory pop-up Round 40
 		} Else If (Difficulty = "Standard (Medium)") {
 			;
 		} Else If (Difficulty = "Standard (Hard)") {
