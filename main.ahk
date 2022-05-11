@@ -1,6 +1,6 @@
 ; Read Me
-	LastUpdate := "2020-12-16"
-	BloonsVersion := "v22.2.3481"
+	LastUpdate := "2021-04-16"
+	BloonsVersion := "v25.0.3817"
 	
 /* To Do
 	1) Screen OCR reader for in-game money
@@ -9,7 +9,7 @@
 	4) Arrays for Map selection/pages
 	5) Arrays for Monkey X&Y coordinates, per Map 
 	*/
-
+	
 ; Initilization
 	; Initilization- Environment
 		#SingleInstance force 			; https://www.autohotkey.com/docs/commands/_SingleInstance.htm
@@ -18,8 +18,10 @@
 		;SetBatchLines -1 				; https://www.autohotkey.com/docs/commands/SetBatchLines.htm
 		#WinActivateForce 				; https://www.autohotkey.com/docs/commands/_WinActivateForce.htm
 		SetTitleMatchMode, 3 			; https://www.autohotkey.com/docs/commands/SetTitleMatchMode.htm
-		global Map,Difficulty,Hero,AdvancedSettings,StartOnMap,Freeplay,DebugMode,LoopAmount,InputDelay,MapLoadTime,PopUpLoadTime
+		global Map,Difficulty,Hero,AdvancedSettings,StartOnMap,Freeplay,DebugMode,LoopAmount,InputDelay,MapLoadTime,PopUpLoadTime,HeroSelectionXPosition
 		global DartX,DartY,BoomerangX,BoomerangY,BombX,BombY,TackX,TackY,IceX,IceY,GlueX,GlueY,SniperX,SniperY,SubX,SubY,BuccaneerX,BuccaneerY,AceX,AceY,HeliX,HeliY,MotarX,MotarY,WizardX,WizardY,SuperX,SuperY,NinjaX,NinjaY,AlchemistX,AlchemistY,DruidX,DruidY,FarmX,FarmY,EngineerX,EngineerY,SpikeX,SpikeY,VillageX,VillageY,HeroX,HeroY
+		global MapListOrdered := ["Monkey Meadow","Tree Stump","Town Center","Resort","Skates","Lotus Island","Candy Falls","Winter Park","Carved","Park Path","Alpine Run","Frozen Over","In The Loop","Cubism","Four Circles","Hedge","End Of The Road","Logs","Balance","Encrypted","Bazaar","Adora's Temple","Spring Spring","KartsNDarts","Moon Landing","Haunted","Downstream","Firing Range","Cracked","Streambed","Chutes","Rake","Spice Islands","","","","X Factor","Mesa","Geared","Spillway","Cargo","Pat's Pond","Peninsula","High Finance","Another Brick","Off The Coast","Cornfield","Underground","Ravine","Flooded Valley","Infernal","Bloddy Puddles","Workshop","Quad","Dark Castle","Muddy Puddles","#Ouch","","",""]
+		global HeroListOrdered := ["Quincy","Gwendolin","Striker Jones","Obyn Greenfoot","Sauda","Captain Churchhill","Benjamin","Ezili","Pat Fusty","Adora","Admiral Brickell","Etienne"]
 
 	; Initilization- Tray
 		If FileExist("C:\Program Files (x86)\Steam\steamapps\common\BloonsTD6\BloonsTD6.exe") {
@@ -39,7 +41,7 @@
 		Menu, Tray, Add, Hide GUI, HideGui
 		Menu, Tray, Add, Start, F2
 		Menu, Tray, Add, Exit, F4
-		Menu, Tray, NoStandard
+		;Menu, Tray, NoStandard
 		;If A_IsCompiled {}				; https://www.autohotkey.com/docs/Variables.htm#IsCompiled
 
 	; Initilization- GUI- Header
@@ -56,11 +58,11 @@
 		Gui, Add, GroupBox, x9 y52 w245 h100, Step 1: Create your build:
 		Gui, Font ; reset font to default
 		Gui, Add, Text, x12 y77 w81 h21 +0x200, Map:
-		Gui, Add, DropDownList, x65 y77 w120 +Disabled vMap, Monkey Meadow|Tree Stump|Town Center|Skates|Lotus Island|Candy Falls|Winter Park|Carved|Park Path|Alpine Run|Frozen Over|In The Loop|Cubism|Four Circles|Hedge|End Of The Road|Logs|Encrypted|Bazaar|Adora's Temple|Spring Spring|KartsNDarts|Moon Landing|Haunted|Downstream|Firing Range|Cracked|Streambed|Chutes|Rake|Spice Islands|X Factor|Mesa|Geared|Spillway|Cargo|Pat's Pond|Peninsula|High Finance|Another Brick|Off The Coast|Cornfield|Underground|Flooded Valley|Infernal|Bloddy Puddles|Workshop|Quad|Dark Castle|Muddy Puddles|#Ouch
+		Gui, Add, DropDownList, x65 y77 w120 +Disabled vMap, Adora's Temple|Alpine Run|Another Brick|Balance|Bazaar|Bloddy Puddles|Candy Falls|Cargo|Carved|Chutes|Cornfield|Cracked|Cubism|Dark Castle|Downstream|Encrypted|End Of The Road|Firing Range|Flooded Valley|Four Circles|Frozen Over|Geared|Haunted|Hedge|High Finance|In The Loop|Infernal|KartsNDarts|Logs|Lotus Island|Mesa|Monkey Meadow|Moon Landing|Muddy Puddles|Off The Coast|Park Path|Pat's Pond|Peninsula|Quad|Rake|Ravine|Resort|Skates|Spice Islands|Spillway|Spring Spring|Streambed|Town Center|Tree Stump|Underground|Winter Park|Workshop|X Factor|#Ouch
 		Gui, Add, Text, x12 y101 w79 h23 +0x200, Difficulty:
-		Gui, Add, DropDownList, x65 y101 w120 +Disabled vDifficulty, Standard (Easy)|Primary Monkeys Only|Deflation|Standard (Medium)|Military Monkeys Only|Apopalypse|Reverse|Standard (Hard)|Magic Monkeys Only|Double HP MOABs|Half Cash|Alternate Bloons Round|Impoppable|CHIMPS
+		Gui, Add, DropDownList, x65 y101 w120 +Disabled vDifficulty, Alternate Bloons Round|Apopalypse|CHIMPS|Deflation|Double HP MOABs|Half Cash|Impoppable|Magic Monkeys Only|Military Monkeys Only|Primary Monkeys Only|Reverse|Standard (Easy)|Standard (Medium)|Standard (Hard)
 		Gui, Add, Text, x12 y125 w95 h23 +0x200, Hero:
-		Gui, Add, DropDownList, x65 y125 w120 +Disabled vHero, Quincy|Gwendolin|Striker Jones|Obyn Greenfoot|Etienne|Captain Churchhill|Benjamin|Ezili|Pat Fusty|Adora|Admiral Brickell
+		Gui, Add, DropDownList, x65 y125 w120 +Disabled vHero, Admiral Brickell|Adora|Benjamin|Captain Churchhill|Etienne|Ezili|Gwendolin|Obyn Greenfoot|Pat Fusty|Quincy|Sauda|Striker Jones
 
 		Gui, Font, s12
 		Gui, Font, c0000FF
@@ -75,7 +77,7 @@
 		Gui, Add, Radio, x268 y173 w230 h15 +Disabled gCustomBuild7 vCustomBuild7, Logs, Impoppable, Freeplay, Debug, On Map
 		Gui, Add, Radio, x268 y189 w230 h15 +Disabled gCustomBuild8 vCustomBuild8, Logs, Impoppable, Debug
 		Gui, Add, Radio, x268 y205 w230 h15 +Disabled gCustomBuild9 vCustomBuild9, Logs, Impoppable, Debug, On Map
-		Gui, Add, Text, x264 y230 w240 h80, `fDARK CASTLE EASY for holiday event rewards and monkey money (the quickest expert-map). `n`fLOGS IMPOPPABLE for level XP and insta monkey (the easiest map). `n`fFREEPLAY for BADs and Fortified Bloons (rounds 100-120 have x10 rounds 1-100).
+		Gui, Add, Text, x264 y230 w240 h80, `fDARK CASTLE EASY for holiday event rewards and monkey money (the quickest expert-map). `n`fLOGS IMPOPPABLE for level XP and insta monkey (the easiest map). `n`fFREEPLAY for BADs, DDTs, and Fortified Bloons (rounds 100-120 have x10 rounds 1-100).
 
 	; Initilization- GUI- Step 2
 		Gui, Font, s12
@@ -291,90 +293,50 @@
 	;F3::Pause, Toggle ; https://www.autohotkey.com/docs/commands/Pause.htm
 	F2::StartBot()
 
+
 ; Custom Functions
 	AutoClickHero() {
 		global
-		Click, 509, 800 ; "Heroes"
-		If (Hero = "Quincy") {
-			Click, 110, 820
-		} Else If (Hero = "Gwendolin") {
-			Click, 280, 820
-		} Else If (Hero = "Striker Jones") {
-			Click, 460, 820
-		} Else If (Hero = "Obyn Greenfoot") {
-			Click, 630, 820
-		} Else If (Hero = "Etienne") {
-			Click, 810, 820
-		} Else If (Hero = "Captain Churchhill") {
-			Click, 980, 820
-		} Else If (Hero = "Benjamin") {
-			Click, 1160, 820
-		} Else If (Hero = "Ezili") {
-			Click, 1350, 820
-		} Else If (Hero = "Pat Fusty") {
-			Click, 1520, 820
-		} Else If (Hero = "Adora") {
-			MouseMove, 1350, 820
-			Sleep, 100
-			Send, {WheelUp 7}
-			Sleep, 100
-			Click, 1350, 820
-		} Else If (Hero = "Admiral Brickell") {
-			MouseMove, 1520, 820
-			Sleep, 100
-			Send, {WheelUp 7}
-			Sleep, 100
-			Click, 1520, 820
+		Click, 90, 830 ; "Change Hero" on map menu
+		Sleep 200
+		If (HasVal(HeroListOrdered,Hero) >= 10) {
+			MouseMove, 1180, 820
+			Sleep 10
+			Send, {WheelUp 12}
+			HeroSelectionXPosition := 1440+175*(HasVal(HeroListOrdered,Hero)-12)
+		} Else If (HasVal(HeroListOrdered,Hero) < 10) {
+			HeroSelectionXPosition := 110+175*(HasVal(HeroListOrdered,Hero)-1)
 		}
+		Click, %HeroSelectionXPosition%, 820
+		Sleep 10
 		Click, 530, 560 ; "Select"
-		SendInput, {Esc} ; back to Main Menu ; Click, 75,45
+		Sleep 10
+		SendInput, {Esc} ; back to map menu
+		Sleep 100
 		Return
 		}
 
 	AutoClickMap() {
 		global
-		Click, 700, 800 ; "Play"
-
-		;arr_Map_MonkeyMeadow := Object("page", 1, "spot", 1)
-		If (Map = "Monkey Meadow" or Map = "Tree Stump" or Map = "Town Center" or Map = "Skates" or Map = "Lotus Island" or Map = "Candy Falls") {
-			ClickNextMapPage := 0
-		} Else If (Map = "Winter Park" or Map = "Carved" or Map = "Park Path" or Map = "Alpine Run" or Map = "Frozen Over" or Map = "In The Loop") {
-			ClickNextMapPage := 1
-		} Else If (Map = "Cubism" or Map = "Four Circles" or Map = "Hedge" or Map = "End Of The Road" or Map = "Logs") {
-			ClickNextMapPage := 2
-		} Else If (Map = "Encrypted" or Map =  "Bazaar" or Map = "Adora's Temple" or Map = "Spring Spring" or Map = "KartsNDarts" or Map = "Moon Landing") {
-			ClickNextMapPage := 3
-		} Else If (Map = "Haunted" or Map = "Downstream" or Map = "Firing Range" or Map = "Cracked" or Map = "Streambed" or Map = "Chutes") {
-			ClickNextMapPage := 4
-		} Else If (Map = "Rake" or Map = "Spice Islands") {
-			ClickNextMapPage := 5
-		} Else If (Map = "X Factor" or Map = "Mesa" or Map = "Geared" or Map = "Spillway" or Map = "Cargo" or Map = "Pat's Pond") {
-			ClickNextMapPage := 6
-		} Else If (Map = "Peninsula" or Map = "High Finance" or Map = "Another Brick" or Map = "Off The Coast" or Map = "Cornfield" or Map = "Underground") {
-			ClickNextMapPage := 7
-		} Else If (Map = "Flooder Valley" or Map = "Infernal" or Map = "Bloddy Puddles" or Map = "Workshop" or Map = "Quad" or Map = "Dark Castle") {
-			ClickNextMapPage := 8
-		} Else If (Map = "Muddy Puddles" or Map = "#Ouch") {
-			ClickNextMapPage := 9
-		}
+		ClickNextMapPage := Floor((HasVal(MapListOrdered,Map)-1)/6)
+		ClickMap := Mod(HasVal(MapListOrdered,Map),6)
 		Loop, % ClickNextMapPage
 			Click, 1370, 360
-		If (Map = "Monkey Meadow" or Map = "Winter Park" or Map = "Cubism" or Map = "Encrypted" or Map = "Haunted" or Map = "Rake"	or Map = "X Factor" or Map = "Peninsula" or Map = "Flooded Valley" or Map = "Muddy Puddles") {
+		If (ClickMap = 1) {
 			Click, 450, 200
-		} Else If (Map = "Tree Stump" or Map = "Carved" or Map = "Four Circles" or Map = "Bazaar" or Map = "Downstream" or Map = "Spice Islands" or Map = "Mesa" or Map = "High Finance" or Map = "Infernal" or Map = "#Ouch") {
+		} Else If (ClickMap = 2) {
 			Click, 800, 200
-		} Else If (Map = "Town Center" or Map = "Park Path" or Map = "Hedge" or Map = "Adora's Temple" or Map = "Firing Range" or Map = "Geared" or Map = "Another Brick" or Map = "Bloddy Puddles") {
+		} Else If (ClickMap = 3) {
 			Click, 1150, 200
-		} Else If (Map = "Skates" or Map = "Alpine Run" or Map = "End Of The Road" or Map = "Spring Spring" or Map = "Cracked" or Map = "Spillway" or Map = "Off The Coast" or Map = "Workshop") {
+		} Else If (ClickMap = 4) {
 			Click, 450, 500
-		} Else If (Map = "Lotus Island" or Map = "Frozen Over" or Map = "Logs" or Map = "KartsNDarts" or Map = "Streambed" or Map = "Cargo" or Map = "Cornfield" or Map = "Quad") {
+		} Else If (ClickMap = 5) {
 			Click, 800, 500
-		} Else If (Map = "Candy Falls" or Map = "In The Loop" or Map = "Moon Landing" or Map = "Chutes" or Map = "Pat's Pond" or Map = "Underground" or Map = "Dark Castle") {
+		} Else If (ClickMap = 0) {
 			Click, 1150, 500
 		}
 		Return
 		}
-
 	AutoClickDifficulty() {
 		global
 		If (Difficulty = "Standard (Easy)" or Difficulty = "Primary Monkeys Only" or Difficulty = "Deflation") {
@@ -404,6 +366,17 @@
 		Click, 800, 610 ; "Ok" map rules popup box
 		Return
 		}
+	
+	HasVal(haystack, needle) {
+		; https://www.autohotkey.com/boards/viewtopic.php?p=109617&sid=a057c8ab901a3ab88f6304b71729c892#p109617
+		if !(IsObject(haystack)) || (haystack.Length() = 0)
+			return 0
+		for index, value in haystack
+			if (value = needle)
+				return index
+		return 0
+		}
+
 	AssignMapVariables() {
 		global
 		If (Map = "Monkey Meadow") {
@@ -455,6 +428,30 @@
 			VillageX := , 		VillageY := 
 			HeroX := , 			HeroY := 
 		} Else If (Map = "Town Center") {
+			SafeX := , 			SafeY := 
+			DartX := , 			DartY := 
+			BoomerangX := , 	BoomerangY := 
+			BombX := , 			BombY := 
+			TackX := , 			TackY := 
+			IceX := , 			IceY := 
+			GlueX := , 			GlueY := 
+			SniperX := , 		SniperY := 
+			SubX := , 			SubY := 
+			BuccaneerX := , 	BuccaneerY := 
+			AceX := , 			AceY := 
+			HeliX := , 			HeliY := 
+			MotarX := , 		MotarY := 
+			WizardX := ,	 	WizardY := 
+			SuperX := ,			SuperY := 
+			NinjaX := , 		NinjaY := 
+			AlchemistX := , 	AlchemistY := 
+			DruidX := , 		DruidY := 
+			FarmX := , 			FarmY := 
+			EngineerX := , 		EngineerY := 
+			SpikeX := , 		SpikeY := 
+			VillageX := , 		VillageY := 
+			HeroX := , 			HeroY := 
+		} Else If (Map = "Resort") {
 			SafeX := , 			SafeY := 
 			DartX := , 			DartY := 
 			BoomerangX := , 	BoomerangY := 
@@ -791,6 +788,30 @@
 			SpikeX := 284, 		SpikeY := 703
 			VillageX := 396, 	VillageY := 578
 			HeroX := 423, 		HeroY := 485
+		} Else If (Map = "Balance") {
+			SafeX := , 			SafeY := 
+			DartX := , 			DartY := 
+			BoomerangX := , 	BoomerangY := 
+			BombX := , 			BombY := 
+			TackX := , 			TackY := 
+			IceX := , 			IceY := 
+			GlueX := , 			GlueY := 
+			SniperX := , 		SniperY := 
+			SubX := , 			SubY := 
+			BuccaneerX := , 	BuccaneerY := 
+			AceX := , 			AceY := 
+			HeliX := , 			HeliY := 
+			MotarX := , 		MotarY := 
+			WizardX := ,	 	WizardY := 
+			SuperX := ,			SuperY := 
+			NinjaX := , 		NinjaY := 
+			AlchemistX := , 	AlchemistY := 
+			DruidX := , 		DruidY := 
+			FarmX := , 			FarmY := 
+			EngineerX := , 		EngineerY := 
+			SpikeX := , 		SpikeY := 
+			VillageX := , 		VillageY := 
+			HeroX := , 			HeroY := 
 		} Else If (Map = "Encrypted") {
 			SafeX := , 			SafeY := 
 			DartX := , 			DartY := 
@@ -1127,6 +1148,30 @@
 			SpikeX := , 		SpikeY := 
 			VillageX := , 		VillageY := 
 			HeroX := , 			HeroY := 
+		} Else If (Map = "X Factor") {
+			SafeX := , 			SafeY := 
+			DartX := , 			DartY := 
+			BoomerangX := , 	BoomerangY := 
+			BombX := , 			BombY := 
+			TackX := , 			TackY := 
+			IceX := , 			IceY := 
+			GlueX := , 			GlueY := 
+			SniperX := , 		SniperY := 
+			SubX := , 			SubY := 
+			BuccaneerX := , 	BuccaneerY := 
+			AceX := , 			AceY := 
+			HeliX := , 			HeliY := 
+			MotarX := , 		MotarY := 
+			WizardX := ,	 	WizardY := 
+			SuperX := ,			SuperY := 
+			NinjaX := , 		NinjaY := 
+			AlchemistX := , 	AlchemistY := 
+			DruidX := , 		DruidY := 
+			FarmX := , 			FarmY := 
+			EngineerX := , 		EngineerY := 
+			SpikeX := , 		SpikeY := 
+			VillageX := , 		VillageY := 
+			HeroX := , 			HeroY := 
 		} Else If (Map = "Mesa") {
 			SafeX := , 			SafeY := 
 			DartX := , 			DartY := 
@@ -1368,6 +1413,30 @@
 			VillageX := , 		VillageY := 
 			HeroX := , 			HeroY := 
 		} Else If (Map = "Underground") {
+			SafeX := , 			SafeY := 
+			DartX := , 			DartY := 
+			BoomerangX := , 	BoomerangY := 
+			BombX := , 			BombY := 
+			TackX := , 			TackY := 
+			IceX := , 			IceY := 
+			GlueX := , 			GlueY := 
+			SniperX := , 		SniperY := 
+			SubX := , 			SubY := 
+			BuccaneerX := , 	BuccaneerY := 
+			AceX := , 			AceY := 
+			HeliX := , 			HeliY := 
+			MotarX := , 		MotarY := 
+			WizardX := ,	 	WizardY := 
+			SuperX := ,			SuperY := 
+			NinjaX := , 		NinjaY := 
+			AlchemistX := , 	AlchemistY := 
+			DruidX := , 		DruidY := 
+			FarmX := , 			FarmY := 
+			EngineerX := , 		EngineerY := 
+			SpikeX := , 		SpikeY := 
+			VillageX := , 		VillageY := 
+			HeroX := , 			HeroY := 
+		} Else If (Map = "Ravine") {
 			SafeX := , 			SafeY := 
 			DartX := , 			DartY := 
 			BoomerangX := , 	BoomerangY := 
@@ -1663,7 +1732,7 @@
 		}
 		ClickOn(tower)
 		If DebugMode
-			SendInput, {F12}
+			SendInput, {F12} ; Screenshot
 		Return
 		}
 
@@ -1671,11 +1740,11 @@
 		global
 		ClickOn(tower)
 		If (upgrade1 = 1) {
-			Send, {SC033}
+			Send, {SC033} ; keyboard key codes for ,
 		} Else If (upgrade1 = 2) {
-			Send, {SC034}
+			Send, {SC034} ; for .
 		} Else If (upgrade1 = 3) {
-			Send, {SC035}
+			Send, {SC035} ; for /
 		}
 		If (upgrade2 = 1) {
 			Send, {SC033}
@@ -1723,42 +1792,41 @@
 			SendInput, {F12}
 		Return
 		}
-
+		
 	StartBot() {
 		global
-		Gui, Submit
-		
-		; no chnages to GUI after F2/Start
-			GuiControl, Disable, Map
-			GuiControl, Disable, Difficulty
-			GuiControl, Disable, Hero
-			GuiControl, Disable, Freeplay
-			GuiControl, Disable, StartOnMap
-			GuiControl, Disable, DebugMode
-			GuiControl, Disable, AdvancedSettings
-			GuiControl, Disable, LoopAmount
-			GuiControl, Disable, InputDelay
-			GuiControl, Disable, MapLoadTime
-			GuiControl, Disable, PopUpLoadTime
-			GuiControl, Disable, CustomBuild1
-			GuiControl, Disable, CustomBuild2
-			GuiControl, Disable, CustomBuild3
-			GuiControl, Disable, CustomBuild4
-			GuiControl, Disable, CustomBuild5
-			GuiControl, Disable, CustomBuild6
-			GuiControl, Disable, CustomBuild7
-			GuiControl, Disable, CustomBuild8
-			GuiControl, Disable, CustomBuild9
-			GuiControlGet, Freeplay,, Freeplay
-			GuiControlGet, StartOnMap,, StartOnMap
-			GuiControlGet, DebugMode,, DebugMode
-			GuiControlGet, LoopAmount,, LoopAmount
-			GuiControlGet, InputDelay,, InputDelay
-			GuiControlGet, MapLoadTime,, MapLoadTime
-			GuiControlGet, PopUpLoadTime,, PopUpLoadTime
+		Gui, Submit ; no chnages to GUI after Start
+		GuiControl, Disable, Map
+		GuiControl, Disable, Difficulty
+		GuiControl, Disable, Hero
+		GuiControl, Disable, Freeplay
+		GuiControl, Disable, StartOnMap
+		GuiControl, Disable, DebugMode
+		GuiControl, Disable, AdvancedSettings
+		GuiControl, Disable, LoopAmount
+		GuiControl, Disable, InputDelay
+		GuiControl, Disable, MapLoadTime
+		GuiControl, Disable, PopUpLoadTime
+		GuiControl, Disable, CustomBuild1
+		GuiControl, Disable, CustomBuild2
+		GuiControl, Disable, CustomBuild3
+		GuiControl, Disable, CustomBuild4
+		GuiControl, Disable, CustomBuild5
+		GuiControl, Disable, CustomBuild6
+		GuiControl, Disable, CustomBuild7
+		GuiControl, Disable, CustomBuild8
+		GuiControl, Disable, CustomBuild9
+		GuiControlGet, Freeplay,, Freeplay
+		GuiControlGet, StartOnMap,, StartOnMap
+		GuiControlGet, DebugMode,, DebugMode
+		GuiControlGet, LoopAmount,, LoopAmount
+		GuiControlGet, InputDelay,, InputDelay
+		GuiControlGet, MapLoadTime,, MapLoadTime
+		GuiControlGet, PopUpLoadTime,, PopUpLoadTime
 
 		WinActivate, BloonsTD6
 		If Not StartOnMap {
+			Click, 700, 800 ; "Play" on main menu
 			AutoClickHero()
 			AutoClickMap()
 			AutoClickDifficulty()
@@ -1766,6 +1834,7 @@
 		AssignMapVariables()
 		Loop, %LoopAmount% {
 			Send, {SPACE} 									; Start round
+			Sleep, 10
 			Send, {SPACE} 									; Speed up round
 			PlayRounds()
 			
