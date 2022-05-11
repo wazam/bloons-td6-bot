@@ -1,6 +1,6 @@
 ; Read Me
-	LastUpdate := "2020-12-09"
-	BloonsVersion := "v22.1.3473"
+	LastUpdate := "2020-12-16"
+	BloonsVersion := "v22.2.3481"
 	
 /* To Do
 	1) Screen OCR reader for in-game money
@@ -1770,14 +1770,13 @@
 			PlayRounds()
 			
 			Click, 800, 760									; "Next" in victory pop-up
-			Sleep, % PopUpLoadTime / 5
+			Sleep, % PopUpLoadTime * 2
 			Click, 930, 700									; "Freeplay" in victory pop-up
-			Sleep, % PopUpLoadTime							; Wait for freeplay rules pop-up
-			SendInput, {Esc}								; Close freeplay rules pop-up ;Click, 791, 596
-			Sleep, % PopUpLoadTime							; Wait for freeplay rules pop-up
+			Sleep, % PopUpLoadTime * 2						; Wait for freeplay rules pop-up
+			Click, 791, 596									; Close freeplay rules pop-up ;SendInput, {Esc}
+			Sleep, % PopUpLoadTime * 2						; Wait for freeplay rules pop-up
 			If DebugMode
 				SendInput, {F12}							; Screenshot final tower placements on map for analysis
-			
 			If Freeplay {
 				Send, {SPACE}								; Resume at double speed
 				Rest(420) 									; Wait 7 minutes for "Defeat" pop-up 
@@ -1785,7 +1784,7 @@
 				Click, 851, 625 							; "Restart" in restart? pop-up
 			} Else {
 				SendInput, {Esc} 							; Pause menu
-				Sleep, % PopUpLoadTime 						; Wait for pause pop-up
+				Sleep, % PopUpLoadTime * 2					; Wait for pause pop-up
 				Click, 900, 700 							; "Restart" in victory pop-up
 				Click, 950, 600 							; "Restart" in restart? pop-up
 			}
@@ -1827,7 +1826,7 @@
 			Upgrade("Alchemist",3,"","","","","","") 		; 4/0/2 Alchemist Round 34
 			Rest(3)
 			Upgrade("Ninja",3,"","","","","","") 			; 4/0/2 Ninja Round 35
-			Rest(78)										; Wait for victory pop-up Round 40
+			Rest(75)										; Wait for victory pop-up Round 40
 		} Else If (Difficulty = "Standard (Medium)") {
 			;
 		} Else If (Difficulty = "Standard (Hard)") {
