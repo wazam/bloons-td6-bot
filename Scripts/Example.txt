@@ -1,0 +1,23 @@
+Create(Hero)				; This is a comment
+Create(Ninja)				; Places your Hero and a Ninja on Round 1
+WatchForRound(3)			; Waits until Round 3
+Upgrade(Ninja, 1)			; Upgrades to 1/0/0 Ninja on r3
+WatchForRound(5)
+Upgrade(Ninja, 3)			; 1/0/1 Ninja on r5
+WatchForRound(7)
+Upgrade(Ninja, 1)
+WatchForRound(10)
+Upgrade(Ninja, 1)
+WatchForRound(19)
+Upgrade(Ninja, 1)			; 4/0/1 Ninja
+WatchForRound(21)
+Create(Alchemist)			; Add an Alchemist
+WatchForRound(23)
+Upgrade(Alchemist, 1, 1)	; 2/0/0 Alchemist (command supports going full tier 5 (5/2/0) in one command)
+WatchForRound(27)
+Upgrade(Alchemist, 1)
+WatchForRound(33)
+Upgrade(Alchemist, 1)
+WatchForRound(35)
+Upgrade(Alchemist, 2, 2)	; 4/0/0 Alchemist
+EndsOnRound(40)				; Last round of your game mode (Easy in this case ends on r40)
