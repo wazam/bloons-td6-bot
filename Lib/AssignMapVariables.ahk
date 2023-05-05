@@ -28,6 +28,7 @@ AssignMapVariables() {
 		EngineerX := ,		EngineerY := 
 	} Else If (Map = "Tree Stump") {		; NOT AVALIABLE
 	} Else If (Map = "Town Center") {		; NOT AVALIABLE
+	} Else If (Map = "Middle Of The Road") {	; NOT AVALIABLE
 	} Else If (Map = "One Two Tree") {		; NOT AVALIABLE
 	} Else If (Map = "Scrapyard") {			; NOT AVALIABLE
 	} Else If (Map = "The Cabin") {			; NOT AVALIABLE
@@ -56,6 +57,7 @@ AssignMapVariables() {
 		FarmX := 261,		FarmY := 597
 		SpikeX := 284,		SpikeY := 703
 		VillageX := 396,	VillageY := 578
+	} Else If (Map = "Polyphemus") {		; NOT AVALIABLE
 	} Else If (Map = "Covered Garden") {	; NOT AVALIABLE
 	} Else If (Map = "Quarry") {			; NOT AVALIABLE
 	} Else If (Map = "Quiet Street") {
@@ -94,6 +96,7 @@ AssignMapVariables() {
 	} Else If (Map = "Off The Coast") {		; NOT AVALIABLE
 	} Else If (Map = "Cornfield") {			; NOT AVALIABLE
 	} Else If (Map = "Underground") {		; NOT AVALIABLE
+	} Else If (Map = "Dark Dungeons") {		; NOT AVALIABLE
 	} Else If (Map = "Sanctuary") {			; NOT AVALIABLE
 	} Else If (Map = "Ravine") {			; NOT AVALIABLE
 	} Else If (Map = "Flooded Valley") {	; NOT AVALIABLE
@@ -110,4 +113,4 @@ AssignMapVariables() {
 	} Else If (Map = "#Ouch") {				; NOT AVALIABLE
 	}
 	Return
-	}
+}
