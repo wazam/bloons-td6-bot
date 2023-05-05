@@ -54,30 +54,30 @@ Create(tower) {
 	TowerClick(tower)						; Places tower
 	If DebugMode
 		SendInput, {F12}					; Screenshot
-	If (tower = "Hero") {					; Added delay for other heros' higher purchase costs
-		If (Hero = "Captain Churchill") {	; $2000
+	If (tower = "Hero") {					; Added delay for other heroes' higher purchase costs
+		If (Hero = "Captain Churchill") {				; $2000
 			Sleep, 146000
-		} Else If (Hero = "Benjamin") {		; $1200
+		} Else If (Hero = "Benjamin") {					; $1200
 			Sleep, 66000
 		} Else If (Hero = "Adora" or Hero = "Psi" ) {	; $1000
 			Sleep, 46000
-		} Else If (Hero = "Admiral Brickell") {	; $900
+		} Else If (Hero = "Admiral Brickell") {			; $900
 			Sleep, 36000
-		} Else If (Hero = "Etienne") {		; $850
+		} Else If (Hero = "Etienne") {					; $850
 			Sleep, 31000
-		} Else If (Hero = "Pat Fusty") { ; $800
+		} Else If (Hero = "Pat Fusty") { 				; $800
 			Sleep, 26000
-		} Else If (Hero = "Striker Jones") { ; $750
+		} Else If (Hero = "Striker Jones") {			; $750
 			Sleep, 21000
-		} Else If (Hero = "Gwendolin") {	; $725
+		} Else If (Hero = "Gwendolin") {				; $725
 			Sleep, 18500
-		} Else If (Hero = "Geraldo") { 		; $700
+		} Else If (Hero = "Geraldo") {					; $700
 			Sleep, 16000
-		} Else If (Hero = "Obyn Greenfoot") { ; $650
+		} Else If (Hero = "Obyn Greenfoot") {			; $650
 			Sleep, 11000
-		} Else If (Hero = "Ezili" or Hero = "Sauda") { ; $600
+		} Else If (Hero = "Ezili" or Hero = "Sauda") {	; $600
 			Sleep, 6000
-		} Else If (Hero = "Quincy") {		; $540
+		} Else If (Hero = "Quincy") {					; $540
 			Sleep, 1000
 		}
 	}
