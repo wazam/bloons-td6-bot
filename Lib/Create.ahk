@@ -59,16 +59,18 @@ Create(tower) {
 			Sleep, 146000
 		} Else If (Hero = "Benjamin") {		; $1200
 			Sleep, 66000
-		} Else If (Hero = "Adora") {		; $1000
+		} Else If (Hero = "Adora" or Hero = "Psi" ) {	; $1000
 			Sleep, 46000
-		} Else If (Hero = "Gwendolin") {	; $900
+		} Else If (Hero = "Admiral Brickell") {	; $900
 			Sleep, 36000
 		} Else If (Hero = "Etienne") {		; $850
 			Sleep, 31000
-		} Else If (Hero = "Psi" or Hero = "Pat Fusty") { ; $800
+		} Else If (Hero = "Pat Fusty") { ; $800
 			Sleep, 26000
-		} Else If (Hero = "Striker Jones" or Hero = "Admiral Brickell") { ; $750
+		} Else If (Hero = "Striker Jones") { ; $750
 			Sleep, 21000
+		} Else If (Hero = "Gwendolin") {	; $725
+			Sleep, 18500
 		} Else If (Hero = "Geraldo") { 		; $700
 			Sleep, 16000
 		} Else If (Hero = "Obyn Greenfoot") { ; $650
