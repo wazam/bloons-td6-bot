@@ -21,7 +21,7 @@ global OrderedMaps = ["Monkey Meadow","Tree Stump","Town Center","Middle Of The 
 global OrderedHeros = ["Quincy","Gwendolin","Striker Jones","Obyn Greenfoot","Geraldo","Captain Churchill","Benjamin","Ezili","Pat Fusty","Adora","Admiral Brickell","Etienne","Sauda","Psi",""]
 
 global Map,Difficulty,Hero,StartOn,EndOn,DebugMode,CashMode,CustomScript,LoopAmount,Storefront,Resolution,ClientWidth,ClientHeight,nextX,nextY
-global DartX,DartY,BoomerangX,BoomerangY,BombX,BombY,TackX,TackY,IceX,IceY,GlueX,GlueY,SniperX,SniperY,SubX,SubY,BuccaneerX,BuccaneerY,AceX,AceY,HeliX,HeliY,MortarX,MortarY,DartlingX,DartlingY,WizardX,WizardY,SuperX,SuperY,NinjaX,NinjaY,Ninja2X,Ninja2Y,AlchemistX,AlchemistY,DruidX,DruidY,FarmX,FarmY,EngineerX,EngineerY,SpikeX,SpikeY,VillageX,VillageY,HeroX,HeroY
+global DartX,DartY,BoomerangX,BoomerangY,BombX,BombY,TackX,TackY,IceX,IceY,GlueX,GlueY,SniperX,SniperY,SubX,SubY,BuccaneerX,BuccaneerY,AceX,AceY,HeliX,HeliY,MortarX,MortarY,DartlingX,DartlingY,WizardX,WizardY,SuperX,SuperY,NinjaX,NinjaY,Ninja2X,Ninja2Y,AlchemistX,AlchemistY,DruidX,DruidY,FarmX,FarmY,EngineerX,EngineerY,SpikeX,SpikeY,VillageX,VillageY,HeroX,HeroY,HandlerX,HandlerY
 
 DefaultMap := "Dark Castle"
 DefaultDifficulty := "Standard (Easy)"
