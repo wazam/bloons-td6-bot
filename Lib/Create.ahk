@@ -47,6 +47,8 @@ Create(tower) {
 		Send, {k}							; Monkey Village
 	} Else If (tower = "Hero") {
 		Send, {u}							; Heroes
+	} Else If (tower = "Handler") {
+		Send, {i}							; Beast Handler
 	}
 	BlockInput Off
 	TowerClick(tower)						; Places tower
