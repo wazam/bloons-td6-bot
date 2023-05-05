@@ -1,6 +1,6 @@
 # https://github.com/marketplace/actions/ahk2exe
 
-name: Test an AutoHotKey application.
+name: Test an AutoHotKey application
 
 on:
   push:
@@ -12,8 +12,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-
+  build:
+    name: Test
     runs-on: windows-latest
 
     steps:
