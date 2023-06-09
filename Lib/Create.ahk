@@ -45,10 +45,10 @@ Create(tower) {
 		Send, {j}							; Spike Factory
 	} Else If (tower = "Village") {
 		Send, {k}							; Monkey Village
-	} Else If (tower = "Hero") {
-		Send, {u}							; Heroes
 	} Else If (tower = "Handler") {
 		Send, {i}							; Beast Handler
+	} Else If (tower = "Hero") {
+		Send, {u}							; Heroes
 	}
 	BlockInput Off
 	TowerClick(tower)						; Places tower
