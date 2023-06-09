@@ -82,6 +82,7 @@ AssignMapVariables() {
 	} Else If (Map = "Chutes") {			; NOT AVALIABLE
 	} Else If (Map = "Rake") {				; NOT AVALIABLE
 	} Else If (Map = "Spice Islands") {		; NOT AVALIABLE
+	} Else If (Map = "Erosion") {			; NOT AVALIABLE
 	} Else If (Map = "Midnight Mansion") {	; NOT AVALIABLE
 	} Else If (Map = "Sunken Columns") {	; NOT AVALIABLE
 	} Else If (Map = "X Factor") {			; NOT AVALIABLE

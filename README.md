@@ -14,13 +14,13 @@ BotTD6 is a simple auto clicker for Bloons TD 6. It can navigate menus (main, he
 3. Change to the current working directory.
 
     ```sh
-    cd ./bloons-td6-bot
+    cd .\bloons-td6-bot
     ```
 
 4. Run the app.
 
     ```sh
-    main.ahk
+    .\main.ahk
     ```
 
 ## Disclaimers

@@ -14,10 +14,10 @@ SetWinDelay, 65
 CoordMode, Mouse, Client
 CoordMode, Pixel, Client
 
-UpdateDate = 2023-05-05
-BloonsVersion = 36.3.6489
+UpdateDate = 2023-06-08
+BloonsVersion = 37.0.6677
 
-global OrderedMaps = ["Monkey Meadow","Tree Stump","Town Center","Middle Of The Road","One Two Tree","Scrapyard","The Cabin","Resort","Skates","Lotus Island","Candy Falls","Winter Park","Carved","Park Path","Alpine Run","Frozen Over","In The Loop","Cubism","Four Circles","Hedge","End Of The Road","Logs","","","Polyphemus","Covered Garden","Quarry","Quiet Street","Bloonarius Prime","Balance","Encrypted","Bazaar","Adora's Temple","Spring Spring","KartsNDarts","Moon Landing","Haunted","Downstream","Firing Range","Cracked","Streambed","Chutes","Rake","Spice Islands","","","","","Midnight Mansion","Sunken Columns","X Factor","Mesa","Geared","Spillway","Cargo","Pat's Pond","Peninsula","High Finance","Another Brick","Off The Coast","Cornfield","Underground","","","","","Dark Dungeons","Sanctuary","Ravine","Flooded Valley","Infernal","Bloddy Puddles","Workshop","Quad","Dark Castle","Muddy Puddles","#Ouch",""]
+global OrderedMaps = ["Monkey Meadow","Tree Stump","Town Center","Middle Of The Road","One Two Tree","Scrapyard","The Cabin","Resort","Skates","Lotus Island","Candy Falls","Winter Park","Carved","Park Path","Alpine Run","Frozen Over","In The Loop","Cubism","Four Circles","Hedge","End Of The Road","Logs","","","Polyphemus","Covered Garden","Quarry","Quiet Street","Bloonarius Prime","Balance","Encrypted","Bazaar","Adora's Temple","Spring Spring","KartsNDarts","Moon Landing","Haunted","Downstream","Firing Range","Cracked","Streambed","Chutes","Rake","Spice Islands","","","","","Erosion","Midnight Mansion","Sunken Columns","X Factor","Mesa","Geared","Spillway","Cargo","Pat's Pond","Peninsula","High Finance","Another Brick","Off The Coast","Cornfield","Underground","","","","Dark Dungeons","Sanctuary","Ravine","Flooded Valley","Infernal","Bloddy Puddles","Workshop","Quad","Dark Castle","Muddy Puddles","#Ouch",""]
 global OrderedHeros = ["Quincy","Gwendolin","Striker Jones","Obyn Greenfoot","Geraldo","Captain Churchill","Benjamin","Ezili","Pat Fusty","Adora","Admiral Brickell","Etienne","Sauda","Psi",""]
 
 global Map,Difficulty,Hero,StartOn,EndOn,DebugMode,CashMode,CustomScript,LoopAmount,Storefront,Resolution,ClientWidth,ClientHeight,nextX,nextY
